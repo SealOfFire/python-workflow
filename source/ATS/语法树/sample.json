@@ -3,110 +3,115 @@
     {
       "width": 55,
       "height": 33,
-      "id": "d63dccb3-b9b1-47b2-94b2-8e48eb86d4d3",
+      "id": "e970a3bd-1c61-4b26-a91a-3a3cc58dbded",
       "position": {
-        "x": -171,
-        "y": -145
+        "x": -202,
+        "y": -148
       },
       "data": {
-        "id": "d63dccb3-b9b1-47b2-94b2-8e48eb86d4d3",
+        "id": "e970a3bd-1c61-4b26-a91a-3a3cc58dbded",
         "label": null,
         "value": null,
-        "type": "start"
+        "type": "start",
+        "op": ""
       },
       "type": "start",
       "selected": false,
       "positionAbsolute": {
-        "x": -171,
-        "y": -145
+        "x": -202,
+        "y": -148
       },
       "dragging": false
     },
     {
       "width": 58,
       "height": 54,
-      "id": "5263c8d6-12d9-43aa-83ef-22d86f7ae568",
+      "id": "06db8a4f-c947-44c9-8edb-6c72488f6aa8",
       "position": {
-        "x": 41.5,
-        "y": -96
+        "x": 77,
+        "y": -121
       },
       "data": {
-        "id": "5263c8d6-12d9-43aa-83ef-22d86f7ae568",
+        "id": "06db8a4f-c947-44c9-8edb-6c72488f6aa8",
         "label": null,
         "value": null,
-        "type": "callPrint"
+        "type": "callPrint",
+        "op": ""
       },
       "type": "callPrint",
       "selected": false,
       "positionAbsolute": {
-        "x": 41.5,
-        "y": -96
+        "x": 77,
+        "y": -121
       },
       "dragging": false
     },
     {
-      "width": 63,
-      "height": 89,
-      "id": "c912cd30-7af6-4fc7-ab1f-4b2e1a388264",
+      "width": 123,
+      "height": 97,
+      "id": "5e45df6b-e39f-43d2-a402-bcbaef0cb248",
       "position": {
-        "x": -84.5,
-        "y": -40
+        "x": -69.5,
+        "y": -76
       },
       "data": {
-        "id": "c912cd30-7af6-4fc7-ab1f-4b2e1a388264",
+        "id": "5e45df6b-e39f-43d2-a402-bcbaef0cb248",
         "label": null,
         "value": null,
-        "type": "add"
+        "type": "compare",
+        "op": "NotEq"
       },
-      "type": "add",
+      "type": "compare",
       "selected": false,
       "positionAbsolute": {
-        "x": -84.5,
-        "y": -40
+        "x": -69.5,
+        "y": -76
       },
       "dragging": false
     },
     {
       "width": 100,
       "height": 56,
-      "id": "2fca7b81-96e8-43ec-8078-538f34b79bf2",
+      "id": "0e209a9a-7275-4b4b-a6ca-93b41ae8d7e4",
       "position": {
-        "x": -239.5,
-        "y": -58.5
+        "x": -251,
+        "y": -73
       },
       "data": {
-        "id": "2fca7b81-96e8-43ec-8078-538f34b79bf2",
+        "id": "0e209a9a-7275-4b4b-a6ca-93b41ae8d7e4",
         "label": null,
-        "value": "aa",
-        "type": "constant"
+        "value": "1",
+        "type": "constant",
+        "op": ""
       },
       "type": "constant",
       "selected": false,
       "positionAbsolute": {
-        "x": -239.5,
-        "y": -58.5
+        "x": -251,
+        "y": -73
       },
       "dragging": false
     },
     {
       "width": 100,
       "height": 56,
-      "id": "448f7417-15ba-4101-804e-99ea823e36e6",
+      "id": "d4f99538-7aec-43d7-a181-c3e76063a6ab",
       "position": {
-        "x": -243.5,
-        "y": 23.5
+        "x": -250,
+        "y": 27.5
       },
       "data": {
-        "id": "448f7417-15ba-4101-804e-99ea823e36e6",
+        "id": "d4f99538-7aec-43d7-a181-c3e76063a6ab",
         "label": null,
-        "value": "bb",
-        "type": "constant"
+        "value": "1",
+        "type": "constant",
+        "op": ""
       },
       "type": "constant",
-      "selected": true,
+      "selected": false,
       "positionAbsolute": {
-        "x": -243.5,
-        "y": 23.5
+        "x": -250,
+        "y": 27.5
       },
       "dragging": false
     }
@@ -115,43 +120,43 @@
     {
       "animated": true,
       "style": { "stroke": "white" },
-      "source": "d63dccb3-b9b1-47b2-94b2-8e48eb86d4d3",
+      "source": "e970a3bd-1c61-4b26-a91a-3a3cc58dbded",
       "sourceHandle": "next",
-      "target": "5263c8d6-12d9-43aa-83ef-22d86f7ae568",
+      "target": "06db8a4f-c947-44c9-8edb-6c72488f6aa8",
       "targetHandle": "previous",
-      "id": "reactflow__edge-d63dccb3-b9b1-47b2-94b2-8e48eb86d4d3next-5263c8d6-12d9-43aa-83ef-22d86f7ae568previous"
+      "id": "reactflow__edge-e970a3bd-1c61-4b26-a91a-3a3cc58dbdednext-06db8a4f-c947-44c9-8edb-6c72488f6aa8previous"
     },
     {
       "animated": true,
       "style": { "stroke": "white" },
-      "source": "c912cd30-7af6-4fc7-ab1f-4b2e1a388264",
+      "source": "5e45df6b-e39f-43d2-a402-bcbaef0cb248",
       "sourceHandle": "next",
-      "target": "5263c8d6-12d9-43aa-83ef-22d86f7ae568",
+      "target": "06db8a4f-c947-44c9-8edb-6c72488f6aa8",
       "targetHandle": "value",
-      "id": "reactflow__edge-c912cd30-7af6-4fc7-ab1f-4b2e1a388264next-5263c8d6-12d9-43aa-83ef-22d86f7ae568value"
+      "id": "reactflow__edge-5e45df6b-e39f-43d2-a402-bcbaef0cb248next-06db8a4f-c947-44c9-8edb-6c72488f6aa8value"
     },
     {
       "animated": true,
       "style": { "stroke": "white" },
-      "source": "2fca7b81-96e8-43ec-8078-538f34b79bf2",
+      "source": "0e209a9a-7275-4b4b-a6ca-93b41ae8d7e4",
       "sourceHandle": "next",
-      "target": "c912cd30-7af6-4fc7-ab1f-4b2e1a388264",
+      "target": "5e45df6b-e39f-43d2-a402-bcbaef0cb248",
       "targetHandle": "left",
-      "id": "reactflow__edge-2fca7b81-96e8-43ec-8078-538f34b79bf2next-c912cd30-7af6-4fc7-ab1f-4b2e1a388264left"
+      "id": "reactflow__edge-0e209a9a-7275-4b4b-a6ca-93b41ae8d7e4next-5e45df6b-e39f-43d2-a402-bcbaef0cb248left"
     },
     {
       "animated": true,
       "style": { "stroke": "white" },
-      "source": "448f7417-15ba-4101-804e-99ea823e36e6",
+      "source": "d4f99538-7aec-43d7-a181-c3e76063a6ab",
       "sourceHandle": "next",
-      "target": "c912cd30-7af6-4fc7-ab1f-4b2e1a388264",
-      "targetHandle": "right",
-      "id": "reactflow__edge-448f7417-15ba-4101-804e-99ea823e36e6next-c912cd30-7af6-4fc7-ab1f-4b2e1a388264right"
+      "target": "5e45df6b-e39f-43d2-a402-bcbaef0cb248",
+      "targetHandle": "comparators",
+      "id": "reactflow__edge-d4f99538-7aec-43d7-a181-c3e76063a6abnext-5e45df6b-e39f-43d2-a402-bcbaef0cb248comparators"
     }
   ],
   "viewport": {
-    "x": 555,
-    "y": 371,
+    "x": 545,
+    "y": 367,
     "zoom": 2
   }
 }

@@ -22,6 +22,8 @@ import Add from './nodes/Add'
 import Constant from './nodes/Constant'
 import Start from './nodes/Start'
 import CallPrint from './nodes/CallPrint'
+import If from './nodes/If'
+import Compare from './nodes/Compare'
 
 type CustomNode = Node<NodeData>;
 
@@ -49,6 +51,8 @@ class FlowChart extends React.Component {
                 start: Start,
                 add: Add,
                 constant: Constant,
+                compare: Compare,
+                if: If,
                 callPrint: CallPrint,
             },
             edgeOptions: {
@@ -146,6 +150,10 @@ class FlowChart extends React.Component {
         this.setNodes(nodes);
     }
 
+    onTextareaChange = (evt: any) => {
+        this.setState({ output: evt.target.value });
+    }
+
     save = () => {
         console.log("save");
         console.log(this.state.rfInstance);
@@ -157,6 +165,14 @@ class FlowChart extends React.Component {
         this.setState({ output: JSON.stringify(flow) });
     }
 
+    load = () => {
+        console.log('load', this.state.output);
+        const nds = eval('(' + this.state.output + ')');
+        console.log('load', nds);
+        this.setNodes(nds.nodes);
+        this.setEdges(nds.edges);
+    }
+
     addNode = (type: string) => {
         console.log("添加节点", type);
         const nds = this.state.nodes.slice();
@@ -165,9 +181,13 @@ class FlowChart extends React.Component {
         const newNode = {
             id: id,
             position: { x: 0, y: 0 },
-            data: { id: id, label: null, value: null, type: type, onDataChange: this.onDataChange },
+            data: { id: id, label: null, value: null, type: type, onDataChange: this.onDataChange, op: '' },
             type: type
         };
+
+        if (type === 'compare') {
+            newNode.data.op = "Eq";
+        }
 
         //const newNode2 = new Constant(null);
 
@@ -195,13 +215,17 @@ class FlowChart extends React.Component {
                 <Controls />
                 <div className="save__controls">
                     <button onClick={this.save}>SAVE</button>
+                    <button onClick={this.load}>LOAD</button>
                     <br></br>
                     <button onClick={this.addNode.bind(this, 'start')}>START</button>
                     <button onClick={this.addNode.bind(this, 'add')}>ADD</button>
                     <button onClick={this.addNode.bind(this, 'constant')}>CONSTANT</button>
                     <button onClick={this.addNode.bind(this, 'callPrint')}>PRINT</button>
                     <br></br>
-                    <textarea value={this.state.output} style={{ width: 200, height: 500 }} />
+                    <button onClick={this.addNode.bind(this, 'compare')}>COMPARE</button>
+                    <button onClick={this.addNode.bind(this, 'if')}>IF</button>
+                    <br></br>
+                    <textarea value={this.state.output} style={{ width: 200, height: 500 }} onChange={this.onTextareaChange} />
                 </div>
             </ReactFlow >
         </div >

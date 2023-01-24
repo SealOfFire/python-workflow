@@ -104,11 +104,59 @@ def astCreateConstant(node, jsonData):
 	"""
 	创建常量
 	"""
-	astNode = ast.Constant(node['data']['value'], lineno=0, col_offset=0)
+	value=eval(node['data']['value'])
+	astNode = ast.Constant(value, lineno=0, col_offset=0)
 	return astNode
 
 
-def asdCallPrint(node, jsonData):
+def astCompare(node, jsonData):
+	"""
+	判断
+	"""
+	pass
+	op = node['data']['op'].lower()
+
+	ops = {
+            'eq': ast.Eq(),
+            'noteq': ast.NotEq(),
+            'lt': ast.Lt(),
+            'lte': ast.LtE(),
+            'gt': ast.Gt(),
+            'gte': ast.GtE(),
+            'is': ast.Is(),
+            'isnot': ast.IsNot(),
+            'in': ast.In(),
+            'notin': ast.NotIn(),
+        }
+
+	edges = findEdgeTarget(node, jsonData)
+	for edge in edges:
+		if(edge['targetHandle'] == 'left'):
+			# 左节点
+			left = findNode(edge['source'], jsonData)
+			print('left', left)
+			astLeft = astCreateNode(left, jsonData)
+		elif(edge['targetHandle'] == 'comparators'):
+			# 右节点
+			right = findNode(edge['source'], jsonData)
+			print('comparators', left)
+			astComparators= astCreateNode(right, jsonData)
+		elif(edge['targetHandle'] == 'previous'):
+			pass
+		else:
+			print("compare 的参数不对")
+	
+	astNode = ast.Compare(astLeft, [ops[op]], [astComparators], lineno=0, col_offset=0)
+	return astNode
+	
+
+def astIf(node, jsonData):
+	"""
+	条件判断
+	"""
+	pass
+
+def astCallPrint(node, jsonData):
 	"""
 	调用print函数
 	"""
@@ -126,9 +174,11 @@ def asdCallPrint(node, jsonData):
 
 
 astNodeMethods = {
+    'constant': astCreateConstant,
     'add': astCreateAdd,
-   	'constant': astCreateConstant,
-    'callPrint': asdCallPrint,
+    'if': astIf,
+    'compare':astCompare,
+    'callPrint': astCallPrint,
 }
 
 
