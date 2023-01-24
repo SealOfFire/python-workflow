@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "语法树", "语法树\语法树.pyproj", "{B4CE2194-46B1-4A90-A496-169919F92BC9}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "reactproject1", "reactproject1\reactproject1.esproj", "{D871AAEA-C498-4C3C-B3D3-10A5793F0B4E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4CE2194-46B1-4A90-A496-169919F92BC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4CE2194-46B1-4A90-A496-169919F92BC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D871AAEA-C498-4C3C-B3D3-10A5793F0B4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D871AAEA-C498-4C3C-B3D3-10A5793F0B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D871AAEA-C498-4C3C-B3D3-10A5793F0B4E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D871AAEA-C498-4C3C-B3D3-10A5793F0B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D871AAEA-C498-4C3C-B3D3-10A5793F0B4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D871AAEA-C498-4C3C-B3D3-10A5793F0B4E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4E58BF49-CF1D-42A6-BB49-98651278EB77}
+	EndGlobalSection
+EndGlobal
