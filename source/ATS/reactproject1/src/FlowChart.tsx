@@ -10,7 +10,8 @@ import ReactFlow, {
     Controls,
     applyEdgeChanges,
     applyNodeChanges,
-    addEdge
+    addEdge,
+    updateEdge,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import './flow-chart.css'
@@ -173,6 +174,22 @@ class FlowChart extends React.Component {
         this.setEdges(nds.edges);
     }
 
+    // 修改连线节点
+    onEdgeUpdateStart = () => {
+        console.log("onEdgeUpdateStart");
+    }
+
+    onEdgeUpdate = (oldEdge: Edge, newConnection: Connection) => {
+        console.log("onEdgeUpdate", oldEdge, newConnection);
+
+        const edges = updateEdge(oldEdge, newConnection, this.state.edges);
+        this.setEdges(edges);
+    }
+
+    onEdgeUpdateEnd = (_: any, edge: Edge) => {
+        console.log("onEdgeUpdateEnd", edge);
+    }
+
     addNode = (type: string) => {
         console.log("添加节点", type);
         const nds = this.state.nodes.slice();
@@ -205,6 +222,9 @@ class FlowChart extends React.Component {
                 onNodesChange={this.onNodesChange}
                 edges={this.state.edges}
                 onEdgesChange={this.onEdgesChange}
+                onEdgeUpdate={this.onEdgeUpdate}
+                onEdgeUpdateStart={this.onEdgeUpdateStart}
+                onEdgeUpdateEnd={this.onEdgeUpdateEnd}
                 onConnect={this.onConnect}
                 style={{ backgroundColor: '#D3D2E5' }}
                 fitView

@@ -1,5 +1,5 @@
 /**
- * 开始节点
+ * 条件判断 if
  */
 
 import React from 'react';
@@ -28,6 +28,7 @@ class If extends React.Component {
                     OR ELSE
                 </div>
                 <Handle id="previous" type="target" position={Position.Left} style={{ top: 15, background: '#555' }} />
+                <Handle id="next" type="source" position={Position.Right} style={{ top: 15, background: '#555' }} />
                 <Handle id="test" type="target" position={Position.Left} style={{ top: 38, background: '#00ff00' }} />
                 <Handle id="body" type="source" position={Position.Right} style={{ top: 60, background: '#555' }} />
                 <Handle id="orelse" type="source" position={Position.Right} style={{ top: 80, background: '#555' }} />

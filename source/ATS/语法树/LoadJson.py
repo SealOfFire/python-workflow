@@ -46,6 +46,16 @@ def findEdgeTarget(node, jsonData):
 			edges.append(edge)
 	return edges
 
+def findEdgeSource(node, jsonData):
+	"""
+	查找指定的节点链接关系
+	"""
+	edges = []
+	for edge in jsonData['edges']:
+		if(edge['source'] == node['id']):
+			edges.append(edge)
+	return edges
+
 
 def findNextNode(node, jsonData):
 	"""
@@ -70,33 +80,25 @@ def findNode(id, jsonData):
 	return None
 
 
+def astCreateStart(node, jsonData):
+	"""
+	"""
+	pass
+
+
 def astCreateAdd(node, jsonData):
 	"""
 	创建add的语法树
 	"""
-	edges = findEdgeTarget(node, jsonData)
+	dictTarget = {
+		'previous': None,
+		'left': None,
+		'right': None,
+	}
+	dictTarget = astCreateTargetNode(dictTarget, node, jsonData)
 
-	if(len(edges) < 2):
-		print("add 的参数不对")
-
-	astLeft = None
-	astRight = None
-	for edge in edges:
-		if(edge['targetHandle'] == 'left'):
-			# 左节点
-			left = findNode(edge['source'], jsonData)
-			print('left', left)
-			astLeft = astCreateNode(left, jsonData)
-		elif(edge['targetHandle'] == 'right'):
-			# 右节点
-			right = findNode(edge['source'], jsonData)
-			print('right', left)
-			astRight = astCreateNode(right, jsonData)
-		elif(edge['targetHandle'] == 'previous'):
-			pass
-		else:
-			print("add 的参数不对")
-	astNode = ast.BinOp(astLeft, ast.Add(), astRight, lineno=0, col_offset=0)
+	astNode = ast.BinOp(dictTarget['left'], ast.Add(
+	), dictTarget['right'], lineno=0, col_offset=0)
 	return astNode
 
 
@@ -104,18 +106,16 @@ def astCreateConstant(node, jsonData):
 	"""
 	创建常量
 	"""
-	value=eval(node['data']['value'])
+	value = eval(node['data']['value'])
 	astNode = ast.Constant(value, lineno=0, col_offset=0)
 	return astNode
 
 
 def astCompare(node, jsonData):
 	"""
-	判断
+	比较
 	"""
-	pass
 	op = node['data']['op'].lower()
-
 	ops = {
             'eq': ast.Eq(),
             'noteq': ast.NotEq(),
@@ -129,32 +129,64 @@ def astCompare(node, jsonData):
             'notin': ast.NotIn(),
         }
 
-	edges = findEdgeTarget(node, jsonData)
-	for edge in edges:
-		if(edge['targetHandle'] == 'left'):
-			# 左节点
-			left = findNode(edge['source'], jsonData)
-			print('left', left)
-			astLeft = astCreateNode(left, jsonData)
-		elif(edge['targetHandle'] == 'comparators'):
-			# 右节点
-			right = findNode(edge['source'], jsonData)
-			print('comparators', left)
-			astComparators= astCreateNode(right, jsonData)
-		elif(edge['targetHandle'] == 'previous'):
-			pass
-		else:
-			print("compare 的参数不对")
-	
-	astNode = ast.Compare(astLeft, [ops[op]], [astComparators], lineno=0, col_offset=0)
+	dictTarget = {
+		'previous': None,
+		'left': None,
+		'comparators': None,
+	}
+	dictTarget = astCreateTargetNode(dictTarget, node, jsonData)
+
+	astNode = ast.Compare(dictTarget['left'], [ops[op]], [
+	                      dictTarget['comparators']], lineno=0, col_offset=0)
 	return astNode
-	
+
 
 def astIf(node, jsonData):
 	"""
 	条件判断
 	"""
-	pass
+	dictTarget = {
+		'previous': None,
+		'test': None,
+		#'body':None,
+		#'orelse':None,
+	}
+	dictTarget = astCreateTargetNode(dictTarget, node, jsonData)
+	
+	dictSource={
+		#'next': None,
+		'body':None,
+		'orelse':None,
+	}
+	dictSource = astCreateSourceNode(dictSource, node, jsonData)
+	
+	astNode = ast.If(dictTarget['test'], dictSource['body'], dictSource['orelse'], lineno=0, col_offset=0)
+	return astNode
+
+
+def astCreateTargetNode(dictTarget, node, jsonData):
+	"""
+	"""
+	edges = findEdgeTarget(node, jsonData)
+	for edge in edges:
+		if(edge['targetHandle'] in dictTarget):
+			node = findNode(edge['source'], jsonData)
+			astNode = astCreateNode(node, jsonData)
+			dictTarget[edge['targetHandle']] = astNode
+	return dictTarget
+
+
+def astCreateSourceNode(dictSource, node, jsonData):
+	"""
+	"""
+	edges = findEdgeSource(node, jsonData)
+	for edge in edges:
+		if(edge['sourceHandle'] in dictSource):
+			node = findNode(edge['target'], jsonData)
+			astNode = astCreateTree(node, jsonData)
+			dictSource[edge['sourceHandle']] = astNode
+	return dictSource
+
 
 def astCallPrint(node, jsonData):
 	"""
@@ -167,17 +199,21 @@ def astCallPrint(node, jsonData):
 			# print 函数的参数
 			value = findNode(edge['source'], jsonData)
 			astValue = astCreateNode(value, jsonData)
-	
+		else:
+			print('参数名称%s没找到' % (edge['targetHandle']))
+
 	name = ast.Name(id='print', ctx=ast.Load(), lineno=0, col_offset=0)
 	astNode = ast.Call(name, [astValue], keywords=[], lineno=0, col_offset=0)
 	return astNode
 
 
+# 节点处理函数列表
 astNodeMethods = {
+    'start': astCreateStart,
     'constant': astCreateConstant,
     'add': astCreateAdd,
     'if': astIf,
-    'compare':astCompare,
+    'compare': astCompare,
     'callPrint': astCallPrint,
 }
 
@@ -199,6 +235,24 @@ def astCreateNode(node, jsonData):
 	"""
 	return astNode
 
+def astCreateTree(node, jsonData):
+	"""
+	创建从指定节点开始的语法树
+	"""
+	astNodes = []
+	astNode = astCreateNode(node, jsonData)
+	astNodes.append(ast.Expr(astNode, lineno=0, col_offset=0));
+	nextNode = findNextNode(node, jsonData)
+	while(nextNode != None):
+		astNode = astCreateNode(nextNode, jsonData)
+		if(isinstance(astNode, ast.If)):
+			astNodes.append(astNode)
+		else:
+			astNodes.append(ast.Expr(astNode, lineno=0, col_offset=0))
+		#print(ast.dump(astNode, indent=4))
+		# 下一个节点
+		nextNode = findNextNode(nextNode, jsonData)
+	return astNodes
 
 def asdCreateCall(node, jsonData):
 	"""
@@ -217,12 +271,14 @@ def iterationNodes(jsonData):
 	nextNode = findNextNode(start, jsonData)
 	while(nextNode != None):
 		astNode = astCreateNode(nextNode, jsonData)
-		astNodes.append(ast.Expr(astNode, lineno=0, col_offset=0))
+		if(isinstance(astNode, ast.If)):
+			astNodes.append(astNode)
+		else:
+			astNodes.append(ast.Expr(astNode, lineno=0, col_offset=0))
 		print(ast.dump(astNode, indent=4))
 		# 下一个节点
 		nextNode = findNextNode(nextNode, jsonData)
 		#print(nextNode)
-		
 
 	astModule = ast.Module(body=astNodes, type_ignores=[])
 	#astNode = ast.Expression(astNode, lineno=0, col_offset=0)
@@ -231,7 +287,7 @@ def iterationNodes(jsonData):
 
 astNode = iterationNodes(jsonData)
 print("AST", ast.dump(astNode, indent=4))
-print("CODE", ast.unparse(astNode))
+print("CODE:\n", ast.unparse(astNode))
 cm = compile(astNode, '<string>', 'exec')
 exec(cm)
 #print(eval(cm))

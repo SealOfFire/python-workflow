@@ -1,5 +1,5 @@
 /**
- * 开始节点
+ * 逻辑运算比较
  */
 
 import React from 'react';

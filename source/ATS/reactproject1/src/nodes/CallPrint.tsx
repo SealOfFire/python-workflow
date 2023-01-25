@@ -1,5 +1,5 @@
 /**
- * 打印函数
+ * 函数调用 print
  */
 
 import React from 'react';

@@ -13,8 +13,15 @@ print(add(3,5 ))
 func_2 ="print(\"11\")"
 func_3 ="print(\"11\"+\"22\")"
 
+func_4= \
+"""
+if(1==1):
+	print(1)
+else:
+	print(1)
+"""
 
-r_node = ast.parse(func_3)
+r_node = ast.parse(func_4)
 print("1.1", ast.dump(r_node, indent=4))
 print("1.2", ast.unparse(r_node))
 cm = compile(r_node, '<string>', 'exec')
