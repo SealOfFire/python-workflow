@@ -6,6 +6,14 @@ source/ATS/语法树: 读取reactflow的json数据文件,通过python的语法�
 
 ### 使用说明
 #### 功能节点按钮
+已经支持的节点  
+**START** 开始节点
+**Add** 加号运算符
+**PRINT** print函数
+**CONSTANT** 定义常量
+**COMPARE** 逻辑运算符(例如== !=)
+**IF** 条件判断语法
+
 点击右上角的按钮可以创建对应的功能节点
 ![Alt](./images/2.png)
 
