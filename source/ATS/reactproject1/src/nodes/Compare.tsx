@@ -4,8 +4,13 @@
 
 import React from 'react';
 import { Handle, Position } from 'reactflow';
+import BaseNode from './BaseNode'
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import Divider from '@mui/material/Divider';
 
-import './text-updater-node.css'
 
 class Compare extends React.Component<any> {
     constructor(props: any) {
@@ -22,36 +27,46 @@ class Compare extends React.Component<any> {
     }
 
     render() {
-        const html =
-            <div className="node-border">
-                <div>
-                    COMPARE
-                </div>
-                <div>
-                    <select value={this.props.data.op} onChange={this.onChange} >
-                        <option value="Eq">==</option>
-                        <option value="NotEq">!=</option>
-                        <option value="Lt">&lt;</option>
-                        <option value="LtE">&lt;=</option>
-                        <option value="Gt">&gt;</option>
-                        <option value="GtE">&gt;=</option>
-                        <option value="Is">IS</option>
-                        <option value="IsNot">IS NOT</option>
-                        <option value="In">IN</option>
-                        <option value="NotIn">NOT IN</option>
-                    </select>
-                </div>
-                <div>
-                    LEFT
-                </div>
-                <div>
-                    COMPARATORS
-                </div>
-                <Handle id="previous" type="target" position={Position.Left} style={{ top: 15, background: '#555' }} />
-                <Handle id="next" type="source" position={Position.Right} style={{ top: 15, background: '#555' }} />
-                <Handle id="left" type="target" position={Position.Left} style={{ top: 60, background: '#00ff00' }} />
-                <Handle id="comparators" type="target" position={Position.Left} style={{ top: 82, background: '#00ff00' }} />
+        const content =
+            <div>
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">OP</InputLabel>
+                    <Select labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="OP"
+                        value={this.props.data.op}
+                        onChange={this.onChange}
+                    >
+                        <MenuItem value={"Eq"}>==</MenuItem>
+                        <MenuItem value={"NotEq"}>!=</MenuItem>
+                        <MenuItem value="Lt">&lt;</MenuItem>
+                        <MenuItem value="LtE">&lt;=</MenuItem>
+                        <MenuItem value="Gt">&gt;</MenuItem>
+                        <MenuItem value="GtE">&gt;=</MenuItem>
+                        <MenuItem value="Is">IS</MenuItem>
+                        <MenuItem value="IsNot">IS NOT</MenuItem>
+                        <MenuItem value="In">IN</MenuItem>
+                        <MenuItem value="NotIn">NOT IN</MenuItem>
+                    </Select>
+                </FormControl>
             </div>
+
+        const handles =
+            <div>
+                <Handle id="left" type="target" position={Position.Left} style={{ top: 175, background: '#00ff00' }} />
+                <Handle id="comparators" type="target" position={Position.Left} style={{ top: 225, background: '#00ff00' }} />
+            </div>
+
+        const html =
+            <BaseNode
+                data={this.props.data}
+                title="COMPARE"
+                hasNext={true}
+                subheader="逻辑运算"
+                content={content}
+                handles={handles}
+                parameters={["LEFT", "COMPARATORS"]}
+            />
 
         return html
     }

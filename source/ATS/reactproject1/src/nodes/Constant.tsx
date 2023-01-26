@@ -1,6 +1,8 @@
 import React from 'react';
 import { Handle, Position } from 'reactflow';
 import { NodeData } from './NodeData'
+import BaseNode from './BaseNode'
+import TextField from '@mui/material/TextField';
 
 import './text-updater-node.css'
 
@@ -35,16 +37,18 @@ class Constant extends React.Component<any> {
     }
 
     render() {
-        const html =
-            <div className="node-border">
-                <div>
-                    CONSTANT
-                </div>
-                <div>
-                    <input id="text" name="text" value={this.props.data.value} onChange={this.onChange} style={{ width: 80 }} />
-                </div>
-                <Handle id="next" type="source" position={Position.Right} style={{ background: '#00ff00' }} />
-            </div>
+        const html = <BaseNode
+            data={this.props.data}
+            title="CONSTANT"
+            subheader="常数"
+            hasPrevious={false}
+            hasNext={true}
+            content={<TextField variant="outlined" id="text" name="text"
+                label="VALUE"
+                value={this.props.data.value}
+                onChange={this.onChange}
+                style={{ width: '160px' }} />}
+        />
 
         return html;
     }

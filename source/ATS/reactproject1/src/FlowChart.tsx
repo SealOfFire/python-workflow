@@ -26,6 +26,7 @@ import Start from './nodes/Start'
 import CallPrint from './nodes/CallPrint'
 import If from './nodes/If'
 import Compare from './nodes/Compare'
+import BaseNode from './nodes/BaseNode'
 
 type CustomNode = Node<NodeData>;
 
@@ -49,6 +50,7 @@ class FlowChart extends React.Component {
 
         this.state = {
             nodeTypes: {
+                baseNode: BaseNode,
                 textUpdater: TextUpdaterNode,
                 start: Start,
                 add: Add,
@@ -211,8 +213,17 @@ class FlowChart extends React.Component {
         const newNode = {
             id: id,
             position: { x: 0, y: 0 },
-            data: { id: id, label: null, value: null, type: type, onDataChange: this.onDataChange, op: '', onDeleteNode: this.deleteNode },
-            type: type
+            data: {
+                id: id,
+                label: null,
+                value: '',
+                type: type,
+                onDataChange: this.onDataChange,
+                op: '',
+                onDeleteNode: this.deleteNode
+            },
+            type: type,
+/*            dragHandle: '.custom-drag-handle',*/
         };
 
         if (type === 'compare') {
@@ -228,6 +239,7 @@ class FlowChart extends React.Component {
         console.log("render");
         return <div style={{ height: '800px' }}>
             <ReactFlow
+                className="touchdevice-flow"
                 defaultEdgeOptions={this.state.edgeOptions}
                 connectionLineStyle={this.state.connectionLineStyle}
                 nodeTypes={this.state.nodeTypes}
@@ -249,6 +261,7 @@ class FlowChart extends React.Component {
                 <div className="save__controls">
                     <Button variant="contained" onClick={this.save}>SAVE</Button>
                     <Button variant="contained" onClick={this.load}>LOAD</Button>
+                    <Button variant="contained" onClick={this.addNode.bind(this, 'baseNode')}>NODE</Button>
                     <br></br>
                     <Button variant="contained" onClick={this.addNode.bind(this, 'start')}>START</Button>
                     <Button variant="contained" onClick={this.addNode.bind(this, 'add')}>ADD</Button>
