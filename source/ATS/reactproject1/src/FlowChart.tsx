@@ -16,6 +16,11 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import './flow-chart.css'
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import TreeView from '@mui/lab/TreeView';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import TreeItem from '@mui/lab/TreeItem';
 
 import { v4 as uuidv4 } from 'uuid';
 import { NodeData } from './nodes/NodeData'
@@ -42,6 +47,39 @@ interface FlowChart {
         output: string
     }
 }
+
+// 菜单参数
+const menuItem = [
+    {
+        title: 'python代码逻辑',
+        items: [
+            {
+                title: 'START',
+                type: 'start',
+            },
+            {
+                title: 'ADD',
+                type: 'add',
+            },
+            {
+                title: 'CONSTANT',
+                type: 'constant',
+            },
+            {
+                title: 'PRINT',
+                type: 'callPrint',
+            },
+            {
+                title: 'COMPARE',
+                type: 'compare',
+            },
+            {
+                title: 'IF',
+                type: 'if',
+            }
+        ]
+    }
+]
 
 class FlowChart extends React.Component {
     constructor(props: any) {
@@ -223,7 +261,7 @@ class FlowChart extends React.Component {
                 onDeleteNode: this.deleteNode
             },
             type: type,
-/*            dragHandle: '.custom-drag-handle',*/
+            /*            dragHandle: '.custom-drag-handle',*/
         };
 
         if (type === 'compare') {
@@ -237,44 +275,57 @@ class FlowChart extends React.Component {
 
     render() {
         console.log("render");
-        return <div style={{ height: '800px' }}>
-            <ReactFlow
-                className="touchdevice-flow"
-                defaultEdgeOptions={this.state.edgeOptions}
-                connectionLineStyle={this.state.connectionLineStyle}
-                nodeTypes={this.state.nodeTypes}
-                nodes={this.state.nodes}
-                onNodesChange={this.onNodesChange}
-                edges={this.state.edges}
-                onEdgesChange={this.onEdgesChange}
-                onEdgeUpdate={this.onEdgeUpdate}
-                onEdgeUpdateStart={this.onEdgeUpdateStart}
-                onEdgeUpdateEnd={this.onEdgeUpdateEnd}
-                onConnect={this.onConnect}
-                style={{ backgroundColor: '#D3D2E5' }}
-                fitView
-                fitViewOptions={this.state.fitViewOptions}
-                onInit={this.setRfInstance}
-            >
-                <Background />
-                <Controls />
-                <div className="save__controls">
-                    <Button variant="contained" onClick={this.save}>SAVE</Button>
-                    <Button variant="contained" onClick={this.load}>LOAD</Button>
-                    <Button variant="contained" onClick={this.addNode.bind(this, 'baseNode')}>NODE</Button>
-                    <br></br>
-                    <Button variant="contained" onClick={this.addNode.bind(this, 'start')}>START</Button>
-                    <Button variant="contained" onClick={this.addNode.bind(this, 'add')}>ADD</Button>
-                    <Button variant="contained" onClick={this.addNode.bind(this, 'constant')}>CONSTANT</Button>
-                    <Button variant="contained" onClick={this.addNode.bind(this, 'callPrint')}>PRINT</Button>
-                    <br></br>
-                    <Button variant="contained" onClick={this.addNode.bind(this, 'compare')}>COMPARE</Button>
-                    <Button variant="contained" onClick={this.addNode.bind(this, 'if')}>IF</Button>
-                    <br></br>
-                    <textarea value={this.state.output} style={{ width: 200, height: 500 }} onChange={this.onTextareaChange} />
-                </div>
-            </ReactFlow >
-        </div >
+        return <Grid container spacing={1}>
+            <Grid xs={2}>
+                <TreeView
+                    aria-label="file system navigator"
+                    defaultCollapseIcon={<ExpandMoreIcon />}
+                    defaultExpandIcon={<ChevronRightIcon />}
+                    sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
+                >
+                    {
+                        menuItem.map((item) =>
+                            <TreeItem nodeId={item.title} label={item.title}>
+                                {item.items.map((child) =>
+                                    <TreeItem nodeId={child.title} label={child.title}
+                                        onClick={this.addNode.bind(this, child.type)} />)}
+                            </TreeItem>)
+                    }
+                </TreeView>
+            </Grid>
+            <Grid xs={10}>
+                <div style={{ height: '800px' }}>
+                    <ReactFlow
+                        className="touchdevice-flow"
+                        defaultEdgeOptions={this.state.edgeOptions}
+                        connectionLineStyle={this.state.connectionLineStyle}
+                        nodeTypes={this.state.nodeTypes}
+                        nodes={this.state.nodes}
+                        onNodesChange={this.onNodesChange}
+                        edges={this.state.edges}
+                        onEdgesChange={this.onEdgesChange}
+                        onEdgeUpdate={this.onEdgeUpdate}
+                        onEdgeUpdateStart={this.onEdgeUpdateStart}
+                        onEdgeUpdateEnd={this.onEdgeUpdateEnd}
+                        onConnect={this.onConnect}
+                        style={{ backgroundColor: '#D3D2E5' }}
+                        fitView
+                        fitViewOptions={this.state.fitViewOptions}
+                        onInit={this.setRfInstance}
+                    >
+                        <Background />
+                        <Controls />
+                        <div className="save__controls">
+                            <Button variant="contained" onClick={this.save}>SAVE</Button>
+                            <Button variant="contained" onClick={this.load}>LOAD</Button>
+                            <Button variant="contained" onClick={this.addNode.bind(this, 'baseNode')}>NODE</Button>
+                            <br></br>
+                            <textarea value={this.state.output} style={{ width: 200, height: 500 }} onChange={this.onTextareaChange} />
+                        </div>
+                    </ReactFlow >
+                </div >
+            </Grid>
+        </Grid>
     }
 }
 
