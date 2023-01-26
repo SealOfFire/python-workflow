@@ -191,6 +191,18 @@ class FlowChart extends React.Component {
         console.log("onEdgeUpdateEnd", edge);
     }
 
+    deleteNode = (id: string) => {
+        console.log("deleteNode", id);
+        // 删除节点
+        const changeNodes = this.state.nodes.slice().filter((n) => n.id !== id);
+        // const changeNodes2 = changeNodes.filter((n) => n.id !== id);
+        this.setNodes(changeNodes);
+
+        // 删除节点的所有连接线
+        const changeEdges = this.state.edges.slice().filter((e) => e.sourceHandle !== id && e.targetHandle !== id);
+        this.setEdges(changeEdges);
+    }
+
     addNode = (type: string) => {
         console.log("添加节点", type);
         const nds = this.state.nodes.slice();
@@ -199,7 +211,7 @@ class FlowChart extends React.Component {
         const newNode = {
             id: id,
             position: { x: 0, y: 0 },
-            data: { id: id, label: null, value: null, type: type, onDataChange: this.onDataChange, op: '' },
+            data: { id: id, label: null, value: null, type: type, onDataChange: this.onDataChange, op: '', onDeleteNode: this.deleteNode },
             type: type
         };
 

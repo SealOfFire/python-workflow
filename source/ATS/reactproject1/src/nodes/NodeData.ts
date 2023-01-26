@@ -4,4 +4,5 @@ export type NodeData = {
     value?: string | null,
     op?: string | null,
     onDataChange?: (value: any | null) => void
+    onDeleteNode?: (value: any | null) => void
 }

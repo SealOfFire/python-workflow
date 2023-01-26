@@ -20,11 +20,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ShareIcon from '@mui/icons-material/Share';
 import StartIcon from '@mui/icons-material/Start';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import ContentCutIcon from '@mui/icons-material/ContentCut';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import { red } from '@mui/material/colors';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
-import './text-updater-node.css'
+import ListItemText from '@mui/material/ListItemText';
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -52,7 +55,7 @@ interface Start {
     }
 }
 
-class Start extends React.Component {
+class Start extends React.Component<any> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -77,6 +80,22 @@ class Start extends React.Component {
         console.log('handleClose');
         this.setState({ anchorEl: null });
         console.log('handleClose');
+        this.setState({ open: false });
+    }
+
+    cut = () => {
+        console.log('cut');
+        this.setState({ open: false });
+    }
+
+    copy = () => {
+        console.log('copy');
+        this.setState({ open: false });
+    }
+
+    delete = () => {
+        console.log('delete');
+        this.props.data.onDeleteNode(this.props.data.id);
         this.setState({ open: false });
     }
 
@@ -108,10 +127,27 @@ class Start extends React.Component {
                                 PaperProps={{
                                     style: {
                                         maxHeight: ITEM_HEIGHT * 4.5,
-                                        width: '20ch',
+                                        width: '14ch',
                                     },
                                 }}>
-                                <MenuItem>删除</MenuItem >
+                                <MenuItem onClick={this.cut}>
+                                    <ListItemIcon>
+                                        <ContentCutIcon fontSize="small" />
+                                    </ListItemIcon>
+                                    <ListItemText>Cut</ListItemText>
+                                </MenuItem >
+                                <MenuItem onClick={this.copy}>
+                                    <ListItemIcon>
+                                        <ContentCopyIcon fontSize="small" />
+                                    </ListItemIcon>
+                                    <ListItemText>Copy</ListItemText>
+                                </MenuItem >
+                                <MenuItem onClick={this.delete}>
+                                    <ListItemIcon>
+                                        <DeleteOutlineIcon fontSize="small" />
+                                    </ListItemIcon>
+                                    <ListItemText>Delete</ListItemText>
+                                </MenuItem >
                             </Menu>
                         </div>
                     }

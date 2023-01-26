@@ -149,7 +149,7 @@ class Border extends React.Component<any> {
         console.log("Border", props);
         this.state = {
             mdTheme: createTheme(),
-            open: true
+            open: false
         };
     }
 
