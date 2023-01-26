@@ -17,31 +17,31 @@ import {
 // react router --------------------------------------------------------------------
 
 // react router
-const router = createBrowserRouter([
-    {
-        path: "/1",
-        element: (
-            <div>
-                <h1>Hello World</h1>
-                <Link to="flow-chart">flow chart</Link>
-                <br></br>
-                <Link to="about">About Us</Link>
-            </div>
-        ),
-    },
-    {
-        path: "/",
-        element: <Border></Border>,
-    },
-    {
-        path: "about",
-        element: <div>About</div>,
-    },
-    {
-        path: "flow-chart",
-        element: <FlowChart></FlowChart>,
-    },
-]);
+//const router = createBrowserRouter([
+//    {
+//        path: "/1",
+//        element: (
+//            <div>
+//                <h1>Hello World</h1>
+//                <Link to="flow-chart">flow chart</Link>
+//                <br></br>
+//                <Link to="about">About Us</Link>
+//            </div>
+//        ),
+//    },
+//    {
+//        path: "/",
+//        element: <Border></Border>,
+//    },
+//    {
+//        path: "about",
+//        element: <div>About</div>,
+//    },
+//    {
+//        path: "flow-chart",
+//        element: <FlowChart></FlowChart>,
+//    },
+//]);
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement

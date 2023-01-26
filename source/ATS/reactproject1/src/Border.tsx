@@ -158,93 +158,100 @@ class Border extends React.Component<any> {
     }
 
     render() {
-        const html = <ThemeProvider theme={this.state.mdTheme}>
-            <Box sx={{ display: 'flex' }}>
-                <CssBaseline />
-                <AppBar position="absolute" open={this.state.open}>
-                    <Toolbar
-                        sx={{
-                            pr: '24px', // keep right padding when drawer closed
-                        }}
-                    >
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={this.toggleDrawer}
+        const html =
+            <ThemeProvider theme={this.state.mdTheme}>
+                <Router>
+                    <Box sx={{ display: 'flex' }}>
+                        <CssBaseline />
+                        <AppBar position="absolute" open={this.state.open}>
+                            <Toolbar
+                                sx={{
+                                    pr: '24px', // keep right padding when drawer closed
+                                }}
+                            >
+                                <IconButton
+                                    edge="start"
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    onClick={this.toggleDrawer}
+                                    sx={{
+                                        marginRight: '36px',
+                                        ...(this.state.open && { display: 'none' }),
+                                    }}
+                                >
+                                    <MenuIcon />
+                                </IconButton>
+                                <Typography
+                                    component="h1"
+                                    variant="h6"
+                                    color="inherit"
+                                    noWrap
+                                    sx={{ flexGrow: 1 }}
+                                >
+                                    Flow Chart
+                                </Typography>
+                                <IconButton color="inherit">
+                                    <Badge badgeContent={4} color="secondary">
+                                        <NotificationsIcon />
+                                    </Badge>
+                                </IconButton>
+                            </Toolbar>
+                        </AppBar>
+                        <Drawer variant="permanent" open={this.state.open}>
+                            <Toolbar
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'flex-end',
+                                    px: [1],
+                                }}
+                            >
+                                <IconButton onClick={this.toggleDrawer}>
+                                    <ChevronLeftIcon />
+                                </IconButton>
+                            </Toolbar>
+                            <Divider />
+                            <List component="nav">
+                                <ListItemButton component={RouterLink} to='/'>
+                                    <ListItemIcon>
+                                        <HomeIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Home" />
+                                </ListItemButton>
+                                <ListItemButton component={RouterLink} to='/flow-chart'>
+                                    <ListItemIcon>
+                                        <AccountTreeIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Flow Chart" />
+                                </ListItemButton>
+                                <Divider sx={{ my: 1 }} />
+                                {/*{secondaryListItems}*/}
+                            </List>
+                        </Drawer>
+                        <Box
+                            component="main"
                             sx={{
-                                marginRight: '36px',
-                                ...(this.state.open && { display: 'none' }),
+                                backgroundColor: (theme) =>
+                                    theme.palette.mode === 'light'
+                                        ? theme.palette.grey[100]
+                                        : theme.palette.grey[900],
+                                flexGrow: 1,
+                                height: '100vh',
+                                overflow: 'auto',
                             }}
                         >
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography
-                            component="h1"
-                            variant="h6"
-                            color="inherit"
-                            noWrap
-                            sx={{ flexGrow: 1 }}
-                        >
-                            Flow Chart
-                        </Typography>
-                        <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
-                <Drawer variant="permanent" open={this.state.open}>
-                    <Toolbar
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'flex-end',
-                            px: [1],
-                        }}
-                    >
-                        <IconButton onClick={this.toggleDrawer}>
-                            <ChevronLeftIcon />
-                        </IconButton>
-                    </Toolbar>
-                    <Divider />
-                    <List component="nav">
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <HomeIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Home"/>
-                        </ListItemButton>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <AccountTreeIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Flow Chart"/>
-                        </ListItemButton>
-                        <Divider sx={{ my: 1 }} />
-                        {/*{secondaryListItems}*/}
-                    </List>
-                </Drawer>
-                <Box
-                    component="main"
-                    sx={{
-                        backgroundColor: (theme) =>
-                            theme.palette.mode === 'light'
-                                ? theme.palette.grey[100]
-                                : theme.palette.grey[900],
-                        flexGrow: 1,
-                        height: '100vh',
-                        overflow: 'auto',
-                    }}
-                >
-                    <Toolbar />
-                    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                        <RouterProvider router={router} />
-                    </Container>
-                </Box>
-            </Box>
-        </ThemeProvider>
+                            <Toolbar />
+                            <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+                                <Routes>
+                                    <Route path="/" element={<div>home</div>} />
+                                    <Route path="/about" element={<div>about</div>} />
+                                    <Route path="/flow-chart" element={<FlowChart></FlowChart>} />
+                                </Routes>
+                            </Container>
+                        </Box>
+                    </Box>
+                </Router>
+            </ThemeProvider>
 
         return html
     }
