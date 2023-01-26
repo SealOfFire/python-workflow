@@ -1,9 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import FlowChart from './FlowChart'
+import Border from './Border'
+
+// react router --------------------------------------------------------------------
+import { createRoot } from "react-dom/client";
+import {
+    createBrowserRouter,
+    RouterProvider,
+    Route,
+    Link,
+} from "react-router-dom";
+// react router --------------------------------------------------------------------
+
+// react router
+const router = createBrowserRouter([
+    {
+        path: "/1",
+        element: (
+            <div>
+                <h1>Hello World</h1>
+                <Link to="flow-chart">flow chart</Link>
+                <br></br>
+                <Link to="about">About Us</Link>
+            </div>
+        ),
+    },
+    {
+        path: "/",
+        element: <Border></Border>,
+    },
+    {
+        path: "about",
+        element: <div>About</div>,
+    },
+    {
+        path: "flow-chart",
+        element: <FlowChart></FlowChart>,
+    },
+]);
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -11,7 +49,17 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         {/*<App />*/}
-        <FlowChart></FlowChart>
+        {/*<FlowChart></FlowChart>*/}
+        {/*<RouterProvider router={router} />*/}
+        {/*<Container fixed style={{ background: 'red' }}>*/}
+        {/*    <BottomNavigation showLabels >*/}
+        {/*        <BottomNavigationAction label="home" href="/" />*/}
+        {/*        <BottomNavigationAction label="flow chart" href="/flow-chart" />*/}
+        {/*        <BottomNavigationAction label="main" href="/main" />*/}
+        {/*    </BottomNavigation>*/}
+        {/*    <RouterProvider router={router} />*/}
+        {/*</Container>*/}
+        <Border></Border>
     </React.StrictMode>
 );
 

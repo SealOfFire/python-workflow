@@ -15,6 +15,7 @@ import ReactFlow, {
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import './flow-chart.css'
+import Button from '@mui/material/Button';
 
 import { v4 as uuidv4 } from 'uuid';
 import { NodeData } from './nodes/NodeData'
@@ -213,7 +214,7 @@ class FlowChart extends React.Component {
 
     render() {
         console.log("render");
-        return <div style={{ width: '1200px', height: '800px' }}>
+        return <div style={{ height: '800px' }}>
             <ReactFlow
                 defaultEdgeOptions={this.state.edgeOptions}
                 connectionLineStyle={this.state.connectionLineStyle}
@@ -234,16 +235,16 @@ class FlowChart extends React.Component {
                 <Background />
                 <Controls />
                 <div className="save__controls">
-                    <button onClick={this.save}>SAVE</button>
-                    <button onClick={this.load}>LOAD</button>
+                    <Button variant="contained" onClick={this.save}>SAVE</Button>
+                    <Button variant="contained" onClick={this.load}>LOAD</Button>
                     <br></br>
-                    <button onClick={this.addNode.bind(this, 'start')}>START</button>
-                    <button onClick={this.addNode.bind(this, 'add')}>ADD</button>
-                    <button onClick={this.addNode.bind(this, 'constant')}>CONSTANT</button>
-                    <button onClick={this.addNode.bind(this, 'callPrint')}>PRINT</button>
+                    <Button variant="contained" onClick={this.addNode.bind(this, 'start')}>START</Button>
+                    <Button variant="contained" onClick={this.addNode.bind(this, 'add')}>ADD</Button>
+                    <Button variant="contained" onClick={this.addNode.bind(this, 'constant')}>CONSTANT</Button>
+                    <Button variant="contained" onClick={this.addNode.bind(this, 'callPrint')}>PRINT</Button>
                     <br></br>
-                    <button onClick={this.addNode.bind(this, 'compare')}>COMPARE</button>
-                    <button onClick={this.addNode.bind(this, 'if')}>IF</button>
+                    <Button variant="contained" onClick={this.addNode.bind(this, 'compare')}>COMPARE</Button>
+                    <Button variant="contained" onClick={this.addNode.bind(this, 'if')}>IF</Button>
                     <br></br>
                     <textarea value={this.state.output} style={{ width: 200, height: 500 }} onChange={this.onTextareaChange} />
                 </div>
