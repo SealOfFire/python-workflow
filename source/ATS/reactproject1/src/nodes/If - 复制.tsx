@@ -1,5 +1,5 @@
 /**
- * 节点基类
+ * 条件判断 if
  */
 
 import React from 'react';
@@ -10,9 +10,12 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ShareIcon from '@mui/icons-material/Share';
 import StartIcon from '@mui/icons-material/Start';
@@ -20,16 +23,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ContentCutIcon from '@mui/icons-material/ContentCut';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import { red } from '@mui/material/colors';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import AppsIcon from '@mui/icons-material/Apps';
 import Divider from '@mui/material/Divider';
-import InputIcon from '@mui/icons-material/Input';
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -48,7 +48,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const ITEM_HEIGHT = 48;
 
-interface BaseNode {
+interface If {
     state: {
         expanded: boolean
         anchorEl: any | null
@@ -56,7 +56,7 @@ interface BaseNode {
     }
 }
 
-class BaseNode extends React.Component<any> {
+class If extends React.Component<any> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -99,31 +99,16 @@ class BaseNode extends React.Component<any> {
         this.props.data.onDeleteNode(this.props.data.id);
         this.setState({ open: false });
     }
+
+
     render() {
-
-        const items = this.props.parameters?.map((item: any) =>
-            <ListItem disablePadding>
-                <ListItemButton>
-                    <ListItemIcon>
-                        <InputIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={item} />
-                </ListItemButton>
-            </ListItem>);
-
-        const list = this.props.parameters === undefined ? "" : <List>{items}</List>
-
-        console.log(list)
-
         const html =
-            <Card sx={{ minWidth: 50 }} elevation={24}>
-                <CardHeader
-                    className="custom-drag-handle"
-                    avatar={
-                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                            <StartIcon />
-                        </Avatar>
-                    }
+            <Card sx={{ minWidth: 50 }}>
+                <CardHeader avatar={
+                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                        <AppsIcon />
+                    </Avatar>
+                }
                     action={
                         <div>
                             <IconButton
@@ -168,50 +153,45 @@ class BaseNode extends React.Component<any> {
                             </Menu>
                         </div>
                     }
-                    title={this.props.title}
-                    subheader={this.props.subheader}
-                />
+                    title="IF"
+                    subheader="条件判断" />
                 <CardContent>
-                    {this.props.content}
-                    {list}
+                    <Typography variant="body2">
+                        TEST
+                    </Typography>
+                    <Divider />
+                    <Typography variant="body2">
+                        BODY
+                    </Typography>
+                    <Divider />
+                    <Typography variant="body2">
+                        OR ELSE
+                    </Typography>
                 </CardContent>
-                {/* 
-                <CardActions disableSpacing>
-                    <IconButton aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
-                    <IconButton aria-label="share">
-                        <ShareIcon />
-                    </IconButton>
-                    <ExpandMore
-                        expand={this.state.expanded}
-                        onClick={this.handleExpandClick}
-                        aria-expanded={this.state.expanded}
-                        aria-label="show more"
-                    >
-                        <ExpandMoreIcon />
-                    </ExpandMore>
-                </CardActions>
-                <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        {this.props.expand}
-                    </CardContent>
-                </Collapse>
-                */}
-                {
-                    this.props.hasPrevious &&
-                    <Handle id="previous" type="target" position={Position.Left} style={{ top: '36px', background: '#555' }} />
-                }
-                {
-                    this.props.hasNext &&
-                    <Handle id="next" type="source" position={Position.Right} style={{ top: '36px', background: '#555' }} />
-                }
-                {this.props.handles}
+                <Handle id="previous" type="target" position={Position.Left} style={{ top: 30, background: '#555' }} />
+                <Handle id="next" type="source" position={Position.Right} style={{ top: 30, background: '#555' }} />
+                <Handle id="test" type="target" position={Position.Left} style={{ top: 100, background: '#00ff00' }} />
+                <Handle id="body" type="source" position={Position.Right} style={{ top: 120, background: '#555' }} />
+                <Handle id="orelse" type="source" position={Position.Right} style={{ top: 140, background: '#555' }} />
             </Card>
+        //<div className="node-border">
+        //    <div>
+        //        IF
+        //    </div>
+        //    <div>
+        //        TEST
+        //    </div>
+        //    <div>
+        //        BODY
+        //    </div>
+        //    <div>
+        //        OR ELSE
+        //    </div>
+
+        //</div>
 
         return html
     }
-
 }
 
-export default BaseNode;
+export default If;

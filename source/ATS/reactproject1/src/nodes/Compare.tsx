@@ -9,7 +9,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import Divider from '@mui/material/Divider';
 
 
 class Compare extends React.Component<any> {
