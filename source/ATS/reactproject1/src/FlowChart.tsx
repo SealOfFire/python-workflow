@@ -12,6 +12,7 @@ import ReactFlow, {
     applyNodeChanges,
     addEdge,
     updateEdge,
+    MarkerType,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import './flow-chart.css'
@@ -24,7 +25,7 @@ import TreeItem from '@mui/lab/TreeItem';
 
 import { v4 as uuidv4 } from 'uuid';
 import { NodeData } from './nodes/NodeData'
-import nodeTypes  from './nodes/nodeTypes'
+import nodeTypes from './nodes/nodeTypes'
 
 // 菜单数据
 import menuItem from './nodes/nodeTree'
@@ -53,9 +54,14 @@ class FlowChart extends React.Component {
         this.state = {
             nodeTypes: nodeTypes,
             edgeOptions: {
+                /*type:'floating',*/
                 animated: true,
                 style: {
-                    stroke: 'white',
+                    stroke: 'black',
+                },
+                markerEnd: {
+                    type: MarkerType.ArrowClosed,
+                    color: 'black',
                 },
             },
             connectionLineStyle: { stroke: 'white' },
@@ -216,14 +222,13 @@ class FlowChart extends React.Component {
                 onDeleteNode: this.deleteNode
             },
             type: type,
-            /*            dragHandle: '.custom-drag-handle',*/
+            // 只能拖拽标题部分
+            /*dragHandle: '.custom-drag-handle',*/
         };
 
         //if (type === 'compare') {
         //    newNode.data.op = "Eq";
         //}
-
-        //const newNode2 = new Constant(null);
 
         this.setState({ nodes: nds.concat(newNode) });
     }

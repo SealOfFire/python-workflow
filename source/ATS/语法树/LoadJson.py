@@ -102,6 +102,7 @@ def astCreateAdd(node, jsonData):
 	return astNode
 
 
+# 常量
 def astCreateConstant(node, jsonData):
 	"""
 	创建常量
@@ -111,6 +112,7 @@ def astCreateConstant(node, jsonData):
 	return astNode
 
 
+# 双目运算
 def astBinOp(node, jsonData):
 	"""
 	双目运算符
@@ -139,9 +141,12 @@ def astBinOp(node, jsonData):
         }
 	dictTarget = astCreateTargetNode(dictTarget, node, jsonData)
 
-	astNode = ast.BinOp(dictTarget['left'], ops[op], dictTarget['right'], lineno=0, col_offset=0)
+	astNode = ast.BinOp(dictTarget['left'], ops[op],
+	                    dictTarget['right'], lineno=0, col_offset=0)
 	return astNode
 
+
+# 比较运算
 def astCompare(node, jsonData):
 	"""
 	比较
@@ -172,6 +177,7 @@ def astCompare(node, jsonData):
 	return astNode
 
 
+# 条件判断
 def astIf(node, jsonData):
 	"""
 	条件判断
@@ -183,15 +189,16 @@ def astIf(node, jsonData):
 		#'orelse':None,
 	}
 	dictTarget = astCreateTargetNode(dictTarget, node, jsonData)
-	
-	dictSource={
+
+	dictSource = {
 		#'next': None,
-		'body':None,
-		'orelse':None,
+		'body': None,
+		'orelse': None,
 	}
 	dictSource = astCreateSourceNode(dictSource, node, jsonData)
-	
-	astNode = ast.If(dictTarget['test'], dictSource['body'], dictSource['orelse'], lineno=0, col_offset=0)
+
+	astNode = ast.If(dictTarget['test'], dictSource['body'],
+	                 dictSource['orelse'], lineno=0, col_offset=0)
 	return astNode
 
 
