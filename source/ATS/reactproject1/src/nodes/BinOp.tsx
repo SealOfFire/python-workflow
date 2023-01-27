@@ -1,5 +1,5 @@
 /**
- * 逻辑运算比较
+ * 双目运算
  */
 
 import React from 'react';
@@ -11,7 +11,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
 
-class Compare extends React.Component<any> {
+class BinOp extends React.Component<any> {
     constructor(props: any) {
         super(props);
     }
@@ -36,16 +36,19 @@ class Compare extends React.Component<any> {
                         value={this.props.data.op}
                         onChange={this.onChange}
                     >
-                        <MenuItem value={"Eq"}>==</MenuItem>
-                        <MenuItem value={"NotEq"}>!=</MenuItem>
-                        <MenuItem value={"Lt"}>&lt;</MenuItem>
-                        <MenuItem value={"LtE"}>&lt;=</MenuItem>
-                        <MenuItem value={"Gt"}>&gt;</MenuItem>
-                        <MenuItem value={"GtE"}>&gt;=</MenuItem>
-                        <MenuItem value={"Is"}>IS</MenuItem>
-                        <MenuItem value={"IsNot"}>IS NOT</MenuItem>
-                        <MenuItem value={"In"}>IN</MenuItem>
-                        <MenuItem value={"NotIn"}>NOT IN</MenuItem>
+                        <MenuItem value={"Add"}>+</MenuItem>
+                        <MenuItem value={"Sub"}>-</MenuItem>
+                        <MenuItem value={"Mult"}>*</MenuItem>
+                        <MenuItem value={"Div"}>&divide;</MenuItem>
+                        <MenuItem value={"FloorDiv"}>//</MenuItem>
+                        <MenuItem value={"Mod"}>%</MenuItem>
+                        <MenuItem value={"Pow"}>POW</MenuItem>
+                        <MenuItem value={"LShift"}>&lt;&lt;</MenuItem>
+                        <MenuItem value={"RShift"}>&gt;&gt;</MenuItem>
+                        <MenuItem value={"BitOr"}>OR</MenuItem>
+                        <MenuItem value={"BitXor"}>XOR</MenuItem>
+                        <MenuItem value={"BitAnd"}>AND</MenuItem>
+                        <MenuItem value={"MatMult"}>@</MenuItem>
                     </Select>
                 </FormControl>
             </div>
@@ -53,22 +56,22 @@ class Compare extends React.Component<any> {
         const handles =
             <div>
                 <Handle id="left" type="target" position={Position.Left} style={{ top: 175, background: '#00ff00' }} />
-                <Handle id="comparators" type="target" position={Position.Left} style={{ top: 225, background: '#00ff00' }} />
+                <Handle id="right" type="target" position={Position.Left} style={{ top: 225, background: '#00ff00' }} />
             </div>
 
         const html =
             <BaseNode
                 data={this.props.data}
-                title="COMPARE"
+                title="BIN OP"
                 hasNext={true}
-                subheader="逻辑运算"
+                subheader="双目运算"
                 content={content}
                 handles={handles}
-                parameters={["LEFT", "COMPARATORS"]}
+                parameters={["LEFT", "RIGHT"]}
             />
 
         return html
     }
 }
 
-export default Compare;
+export default BinOp;

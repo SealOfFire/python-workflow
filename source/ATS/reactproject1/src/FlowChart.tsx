@@ -24,14 +24,10 @@ import TreeItem from '@mui/lab/TreeItem';
 
 import { v4 as uuidv4 } from 'uuid';
 import { NodeData } from './nodes/NodeData'
-import TextUpdaterNode from './nodes/TextUpdaterNode'
-import Add from './nodes/Add'
-import Constant from './nodes/Constant'
-import Start from './nodes/Start'
-import CallPrint from './nodes/CallPrint'
-import If from './nodes/If'
-import Compare from './nodes/Compare'
-import BaseNode from './nodes/BaseNode'
+import nodeTypes  from './nodes/nodeTypes'
+
+// 菜单数据
+import menuItem from './nodes/nodeTree'
 
 type CustomNode = Node<NodeData>;
 
@@ -48,38 +44,6 @@ interface FlowChart {
     }
 }
 
-// 菜单参数
-const menuItem = [
-    {
-        title: 'python代码逻辑',
-        items: [
-            {
-                title: 'START',
-                type: 'start',
-            },
-            {
-                title: 'ADD',
-                type: 'add',
-            },
-            {
-                title: 'CONSTANT',
-                type: 'constant',
-            },
-            {
-                title: 'PRINT',
-                type: 'callPrint',
-            },
-            {
-                title: 'COMPARE',
-                type: 'compare',
-            },
-            {
-                title: 'IF',
-                type: 'if',
-            }
-        ]
-    }
-]
 
 class FlowChart extends React.Component {
     constructor(props: any) {
@@ -87,16 +51,7 @@ class FlowChart extends React.Component {
         console.log("构造函数");
 
         this.state = {
-            nodeTypes: {
-                baseNode: BaseNode,
-                textUpdater: TextUpdaterNode,
-                start: Start,
-                add: Add,
-                constant: Constant,
-                compare: Compare,
-                if: If,
-                callPrint: CallPrint,
-            },
+            nodeTypes: nodeTypes,
             edgeOptions: {
                 animated: true,
                 style: {
@@ -264,9 +219,9 @@ class FlowChart extends React.Component {
             /*            dragHandle: '.custom-drag-handle',*/
         };
 
-        if (type === 'compare') {
-            newNode.data.op = "Eq";
-        }
+        //if (type === 'compare') {
+        //    newNode.data.op = "Eq";
+        //}
 
         //const newNode2 = new Constant(null);
 

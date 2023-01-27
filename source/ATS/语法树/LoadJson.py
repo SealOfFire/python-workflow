@@ -111,6 +111,37 @@ def astCreateConstant(node, jsonData):
 	return astNode
 
 
+def astBinOp(node, jsonData):
+	"""
+	双目运算符
+	"""
+	op = node['data']['op'].lower()
+	ops = {
+            'add': ast.Add(),
+            'sub': ast.Sub(),
+            'mult': ast.Mult(),
+            'div': ast.Div(),
+            'floordiv': ast.FloorDiv(),
+            'mod': ast.Mod(),
+            'pow': ast.Pow(),
+            'lshift': ast.LShift(),
+            'rshift': ast.RShift(),
+            'bitor': ast.BitOr(),
+            'bitxor': ast.BitXor(),
+            'bitand': ast.BitAnd(),
+            'matmult': ast.MatMult(),
+        }
+
+	dictTarget = {
+            'previous': None,
+            'left': None,
+            'right': None,
+        }
+	dictTarget = astCreateTargetNode(dictTarget, node, jsonData)
+
+	astNode = ast.BinOp(dictTarget['left'], ops[op], dictTarget['right'], lineno=0, col_offset=0)
+	return astNode
+
 def astCompare(node, jsonData):
 	"""
 	比较
@@ -215,6 +246,7 @@ astNodeMethods = {
     'if': astIf,
     'compare': astCompare,
     'callPrint': astCallPrint,
+	'binOp':astBinOp,
 }
 
 
