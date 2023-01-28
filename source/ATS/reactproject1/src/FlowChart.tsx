@@ -22,6 +22,12 @@ import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
+import Drawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import Slide from '@mui/material/Slide';
 
 import { v4 as uuidv4 } from 'uuid';
 import { NodeData } from './nodes/NodeData'
@@ -34,6 +40,12 @@ type CustomNode = Node<NodeData>;
 
 interface FlowChart {
     state: {
+        top: boolean,
+        left: boolean,
+        bottom: boolean,
+        right: boolean,
+        checked: boolean,
+        containerRef: any,
         nodeTypes: any,
         nodes: CustomNode[],
         edges: Edge[],
@@ -52,6 +64,12 @@ class FlowChart extends React.Component {
         console.log("构造函数");
 
         this.state = {
+            top: true,
+            left: true,
+            bottom: true,
+            right: true,
+            checked: false,
+            containerRef: React.createRef(),
             nodeTypes: nodeTypes,
             edgeOptions: {
                 /*type:'floating',*/
@@ -233,28 +251,62 @@ class FlowChart extends React.Component {
         this.setState({ nodes: nds.concat(newNode) });
     }
 
+    handleChange = () => {
+        this.setState({ checked: !this.state.checked })
+    }
+
     render() {
-        console.log("render");
-        return <Grid container spacing={1}>
+        // console.log("render");
+        const html4 =
+            <Box sx={{ background: '#555555' }} ref={this.state.containerRef}>
+                <Drawer anchor={'left'}
+                    open={this.state.left}
+                    container={this.state.containerRef.current}>
+                    aaa
+                </Drawer>
+            </Box>
+
+        const html3 =
+            <React.Fragment>
+                <Box sx={{ background: '#007555' }}
+                    ref={this.state.containerRef}>
+                    <FormControlLabel
+                        control={<Switch checked={this.state.checked} onChange={this.handleChange} />}
+                        label="Show"
+                    />
+                    <Collapse in={this.state.checked} collapsedSize={40} orientation="horizontal">
+                        <Box sx={{ width: 250, height: 250, background: '#555555' }}>
+                            aa
+                        </Box>
+                    </Collapse>
+                    <Slide direction="up" in={this.state.checked} container={this.state.containerRef.current}>
+                        <Box>bbb</Box>
+                    </Slide>
+                </Box>
+            </React.Fragment >
+
+        const html = <Grid container spacing={1}>
             <Grid xs={2}>
-                <TreeView
-                    aria-label="file system navigator"
-                    defaultCollapseIcon={<ExpandMoreIcon />}
-                    defaultExpandIcon={<ChevronRightIcon />}
-                    sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
-                >
-                    {
-                        menuItem.map((item) =>
-                            <TreeItem nodeId={item.title} label={item.title}>
-                                {item.items.map((child) =>
-                                    <TreeItem nodeId={child.title} label={child.title}
-                                        onClick={this.addNode.bind(this, child.type)} />)}
-                            </TreeItem>)
-                    }
-                </TreeView>
+                <div style={{ background: '#929292' }} >
+                    <TreeView
+                        aria-label="file system navigator"
+                        defaultCollapseIcon={<ExpandMoreIcon />}
+                        defaultExpandIcon={<ChevronRightIcon />}
+                        sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
+                    >
+                        {
+                            menuItem.map((item) =>
+                                <TreeItem nodeId={item.title} label={item.title}>
+                                    {item.items.map((child) =>
+                                        <TreeItem nodeId={child.title} label={child.title}
+                                            onClick={this.addNode.bind(this, child.type)} />)}
+                                </TreeItem>)
+                        }
+                    </TreeView>
+                </div>
             </Grid>
             <Grid xs={10}>
-                <div style={{ height: '800px' }}>
+                <div style={{ height: '1000px' }}>
                     <ReactFlow
                         className="touchdevice-flow"
                         defaultEdgeOptions={this.state.edgeOptions}
@@ -286,6 +338,8 @@ class FlowChart extends React.Component {
                 </div >
             </Grid>
         </Grid>
+
+        return html
     }
 }
 

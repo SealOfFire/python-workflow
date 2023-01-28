@@ -18,11 +18,9 @@ import Container from '@mui/material/Container';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
-/*import Link from '@mui/material/Link';*/
-import Button from '@mui/material/Button';
+
 
 // 图表组件
 import FlowChart from './FlowChart'
@@ -241,7 +239,7 @@ class Border extends React.Component<any> {
                             }}
                         >
                             <Toolbar />
-                            <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+                            <Container id='container' maxWidth={false} sx={{ mt: 4, mb: 4 }}>
                                 <Routes>
                                     <Route path="/" element={<div>home</div>} />
                                     <Route path="/about" element={<div>about</div>} />
