@@ -8,7 +8,7 @@ source/ATS/语法树: 读取reactflow的json数据文件,通过python的语法�
 #### 功能节点按钮
 已经支持的节点  
 **START** 开始节点  
-**NAME** 变量
+**NAME** 变量  
 **ASSGIN** 赋值  
 **PRINT** print函数  
 **CONSTANT** 定义常量  
