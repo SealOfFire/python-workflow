@@ -21,7 +21,15 @@ else:
 	print(1)
 """
 
-r_node = ast.parse(func_4)
+func_5="ddd=1+2"
+
+func_6= \
+"""
+a1 = 5
+a = [1, a1, 2, 3]
+"""
+
+r_node = ast.parse(func_6)
 print("1.1", ast.dump(r_node, indent=4))
 print("1.2", ast.unparse(r_node))
 cm = compile(r_node, '<string>', 'exec')

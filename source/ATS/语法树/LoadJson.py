@@ -4,9 +4,10 @@
 '''
 import ast
 import json
+import re
 
 # 读取的文件名
-fileName = 'sample.json'
+fileName = 'for sample.json'
 
 jsonData = {}
 with open(fileName, 'r', encoding='utf-8') as f:
@@ -80,30 +81,14 @@ def findNode(id, jsonData):
 	return None
 
 
-def astCreateStart(node, jsonData):
+def astStart(node, jsonData):
 	"""
 	"""
 	pass
 
 
-def astCreateAdd(node, jsonData):
-	"""
-	创建add的语法树
-	"""
-	dictTarget = {
-		'previous': None,
-		'left': None,
-		'right': None,
-	}
-	dictTarget = astCreateTargetNode(dictTarget, node, jsonData)
-
-	astNode = ast.BinOp(dictTarget['left'], ast.Add(
-	), dictTarget['right'], lineno=0, col_offset=0)
-	return astNode
-
-
 # 常量
-def astCreateConstant(node, jsonData):
+def astConstant(node, jsonData):
 	"""
 	创建常量
 	"""
@@ -202,6 +187,75 @@ def astIf(node, jsonData):
 	return astNode
 
 
+# 创建 for 节点
+def astFor(node, jsonData):
+	"""
+	创建 for 节点
+	"""
+
+	astTarget = ast.Name(id=node['data']['target'],
+	                     ctx=ast.Store(), lineno=0, col_offset=0)
+
+	dictTarget = {
+		'previous': None,
+		'iter': None,
+	}
+	dictTarget = astCreateTargetNode(dictTarget, node, jsonData)
+
+	dictSource = {
+		#'next': None,
+		'body': None,
+		'orelse': [],
+	}
+	dictSource = astCreateSourceNode(dictSource, node, jsonData)
+
+	astNode = ast.For(astTarget, dictTarget['iter'],
+	                  dictSource['body'], dictSource['orelse'], lineno=0, col_offset=0)
+	return astNode
+
+
+# 创建变量
+def astName(node, jsonData):
+	"""
+	创建变量
+	"""
+	astNode=ast.Name(id=node['data']['name'], ctx=ast.Load(), lineno=0, col_offset=0);
+	return astNode;
+
+
+# 分配
+def astAssign(node, jsonData):
+	"""
+	分配
+	"""
+	astTarget=ast.Name(id=node['data']['targets'], ctx=ast.Store(), lineno=0, col_offset=0);
+
+	dictTarget = {
+		'value': None,
+	}
+	dictTarget = astCreateTargetNode(dictTarget, node, jsonData)
+	astNode=ast.Assign([astTarget], dictTarget['value'], lineno=0, col_offset=0);
+	return astNode;
+
+
+# list
+def astList(node, jsonData):
+	"""
+	list
+	"""
+	elts=[]
+	edges = findEdgeTarget(node, jsonData)
+	for edge in edges:
+		name=re.sub("\[\d+\]","",edge['targetHandle']);
+		if(name == 'value'):
+			index = int(re.search("\[\d+\]",edge['targetHandle']).group().replace('[','').replace(']',''))
+			childNode = findNode(edge['source'], jsonData)
+			elts.insert(index, astCreateNode(childNode, jsonData))
+
+	astNode=ast.List(elts, ast.Load(), lineno=0, col_offset=0);
+	return astNode;
+
+
 def astCreateTargetNode(dictTarget, node, jsonData):
 	"""
 	"""
@@ -247,13 +301,16 @@ def astCallPrint(node, jsonData):
 
 # 节点处理函数列表
 astNodeMethods = {
-    'start': astCreateStart,
-    'constant': astCreateConstant,
-    'add': astCreateAdd,
+    'start': astStart,
+    'constant': astConstant,
+	'name': astName,
+	'list': astList,
     'if': astIf,
+	'assign':astAssign,
     'compare': astCompare,
     'callPrint': astCallPrint,
 	'binOp':astBinOp,
+	'for':astFor,
 }
 
 
@@ -262,17 +319,14 @@ def astCreateNode(node, jsonData):
 	创建语法树节点
 	"""
 	astNode = astNodeMethods[node['type']](node, jsonData)
-
-	"""
-	match node['type']:
-		case 'add':
-			astNode = astCreateAdd(node, jsonData)
-		case 'constant':
-			astNode = astCreateConstant(node)
-		case 'callPrint':
-			asdCallPrint = asdCallPrint(node, jsonData)
-	"""
 	return astNode
+
+def asdCreateCall(node, jsonData):
+	"""
+	调用函数
+	"""
+	pass
+
 
 def astCreateTree(node, jsonData):
 	"""
@@ -280,11 +334,11 @@ def astCreateTree(node, jsonData):
 	"""
 	astNodes = []
 	astNode = astCreateNode(node, jsonData)
-	astNodes.append(ast.Expr(astNode, lineno=0, col_offset=0));
+	astNodes.append(ast.Expr(astNode, lineno=0, col_offset=0))
 	nextNode = findNextNode(node, jsonData)
 	while(nextNode != None):
 		astNode = astCreateNode(nextNode, jsonData)
-		if(isinstance(astNode, ast.If)):
+		if(isinstance(astNode, ast.If) or isinstance(astNode, ast.For) or isinstance(astNode, ast.Assign)):
 			astNodes.append(astNode)
 		else:
 			astNodes.append(ast.Expr(astNode, lineno=0, col_offset=0))
@@ -292,12 +346,6 @@ def astCreateTree(node, jsonData):
 		# 下一个节点
 		nextNode = findNextNode(nextNode, jsonData)
 	return astNodes
-
-def asdCreateCall(node, jsonData):
-	"""
-	调用函数
-	"""
-	pass
 
 
 def iterationNodes(jsonData):
@@ -310,7 +358,7 @@ def iterationNodes(jsonData):
 	nextNode = findNextNode(start, jsonData)
 	while(nextNode != None):
 		astNode = astCreateNode(nextNode, jsonData)
-		if(isinstance(astNode, ast.If)):
+		if(isinstance(astNode, ast.If) or isinstance(astNode, ast.For) or isinstance(astNode, ast.Assign)):
 			astNodes.append(astNode)
 		else:
 			astNodes.append(ast.Expr(astNode, lineno=0, col_offset=0))

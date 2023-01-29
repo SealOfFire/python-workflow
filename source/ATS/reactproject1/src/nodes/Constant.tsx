@@ -4,8 +4,6 @@ import { NodeData } from './NodeData'
 import BaseNode from './BaseNode'
 import TextField from '@mui/material/TextField';
 
-import './text-updater-node.css'
-
 interface Constant {
     state: {
         id: string,
@@ -44,6 +42,7 @@ class Constant extends React.Component<any> {
             hasPrevious={false}
             hasNext={true}
             content={<TextField variant="outlined" id="text" name="text"
+                size="small"
                 label="VALUE"
                 value={this.props.data.value}
                 onChange={this.onChange}

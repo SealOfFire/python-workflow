@@ -235,11 +235,14 @@ class FlowChart extends React.Component {
                 label: null,
                 value: '',
                 type: type,
-                onDataChange: this.onDataChange,
                 op: '',
-                onDeleteNode: this.deleteNode
+                list: [],
+                target: null,
+                targets: null,
+                onDataChange: this.onDataChange,
+                onDeleteNode: this.deleteNode,
             },
-            type: type,
+            type: type
             // 只能拖拽标题部分
             /*dragHandle: '.custom-drag-handle',*/
         };
