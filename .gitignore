@@ -4,3 +4,6 @@
 
 /.vs
 /source/ATS/.vs
+/source/ATS/ant/.vscode
+/source/ATS/ant/obj/Debug
+*.user
