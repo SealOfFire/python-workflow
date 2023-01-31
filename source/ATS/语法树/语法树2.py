@@ -29,7 +29,13 @@ a1 = 5
 a = [1, a1, 2, 3]
 """
 
-r_node = ast.parse(func_6)
+func_7=\
+'''
+for item in [1, 2]:
+    value = item
+'''
+
+r_node = ast.parse(func_7)
 print("1.1", ast.dump(r_node, indent=4))
 print("1.2", ast.unparse(r_node))
 cm = compile(r_node, '<string>', 'exec')

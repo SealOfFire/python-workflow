@@ -7,7 +7,7 @@ import json
 import re
 
 # 读取的文件名
-fileName = 'for sample.json'
+fileName = 'sample.json'
 
 jsonData = {}
 with open(fileName, 'r', encoding='utf-8') as f:
@@ -193,14 +193,17 @@ def astFor(node, jsonData):
 	创建 for 节点
 	"""
 
-	astTarget = ast.Name(id=node['data']['target'],
-	                     ctx=ast.Store(), lineno=0, col_offset=0)
+	#astTarget = ast.Name(id=node['data']['target'],
+	#                     ctx=ast.Store(), lineno=0, col_offset=0)
 
 	dictTarget = {
+		'target':None,
 		'previous': None,
 		'iter': None,
 	}
 	dictTarget = astCreateTargetNode(dictTarget, node, jsonData)
+	if( isinstance(dictTarget['target'], ast.Name)):
+		dictTarget['target'].ctx=ast.Store()
 
 	dictSource = {
 		#'next': None,
@@ -209,7 +212,7 @@ def astFor(node, jsonData):
 	}
 	dictSource = astCreateSourceNode(dictSource, node, jsonData)
 
-	astNode = ast.For(astTarget, dictTarget['iter'],
+	astNode = ast.For(dictTarget['target'], dictTarget['iter'],
 	                  dictSource['body'], dictSource['orelse'], lineno=0, col_offset=0)
 	return astNode
 
@@ -219,7 +222,7 @@ def astName(node, jsonData):
 	"""
 	创建变量
 	"""
-	astNode=ast.Name(id=node['data']['name'], ctx=ast.Load(), lineno=0, col_offset=0);
+	astNode=ast.Name(id=node['data']['value'], ctx=ast.Load(), lineno=0, col_offset=0);
 	return astNode;
 
 
@@ -228,13 +231,16 @@ def astAssign(node, jsonData):
 	"""
 	分配
 	"""
-	astTarget=ast.Name(id=node['data']['targets'], ctx=ast.Store(), lineno=0, col_offset=0);
+	#astTarget=ast.Name(id=node['data']['targets'], ctx=ast.Store(), lineno=0, col_offset=0);
 
 	dictTarget = {
+		'targets':None,
 		'value': None,
 	}
 	dictTarget = astCreateTargetNode(dictTarget, node, jsonData)
-	astNode=ast.Assign([astTarget], dictTarget['value'], lineno=0, col_offset=0);
+	if( isinstance(dictTarget['targets'], ast.Name)):
+		dictTarget['targets'].ctx=ast.Store()
+	astNode=ast.Assign([dictTarget['targets']], dictTarget['value'], lineno=0, col_offset=0);
 	return astNode;
 
 
@@ -334,7 +340,12 @@ def astCreateTree(node, jsonData):
 	"""
 	astNodes = []
 	astNode = astCreateNode(node, jsonData)
-	astNodes.append(ast.Expr(astNode, lineno=0, col_offset=0))
+
+	if(isinstance(astNode, ast.If) or isinstance(astNode, ast.For) or isinstance(astNode, ast.Assign)):
+		astNodes.append(astNode)
+	else:
+		astNodes.append(ast.Expr(astNode, lineno=0, col_offset=0))	
+
 	nextNode = findNextNode(node, jsonData)
 	while(nextNode != None):
 		astNode = astCreateNode(nextNode, jsonData)
@@ -375,6 +386,7 @@ def iterationNodes(jsonData):
 astNode = iterationNodes(jsonData)
 print("AST", ast.dump(astNode, indent=4))
 print("CODE:\n", ast.unparse(astNode))
+print("RESULT:")
 cm = compile(astNode, '<string>', 'exec')
 exec(cm)
 #print(eval(cm))
