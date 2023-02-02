@@ -322,7 +322,7 @@ class FlowChart extends React.Component {
     render() {
         const html =
             <React.Fragment>
-                <div style={{ height: '100%', flexGrow: 1 }} ref={this.state.reactFlowWrapper}>
+                <div style={{ height: '100%', width: '100%', flexGrow: 1, }} ref={this.state.reactFlowWrapper}>
                     <ReactFlow
                         defaultViewport={{ x: 0, y: 0, zoom: 1.0 }}
                         nodes={this.state.nodes}

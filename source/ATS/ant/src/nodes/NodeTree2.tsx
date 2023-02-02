@@ -58,8 +58,15 @@ class NodeTree extends React.Component {
         const html =
             <React.Fragment>
                 <Tree
-                    treeData={this.state.nodes}
-                />
+                    showLine={true}
+                    showIcon={true}
+                >
+                    <Tree.TreeNode title='program' key='program'>
+                        <Tree.TreeNode title={<span draggable> aaaa</span>} key='aaaa' icon={<MehOutlined />}>
+                            bbbb
+                        </Tree.TreeNode>
+                    </Tree.TreeNode>
+                </Tree>
             </React.Fragment>
 
         return html;

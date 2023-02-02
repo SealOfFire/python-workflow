@@ -5,11 +5,14 @@ import App from './App';
 import Main from './Main';
 import reportWebVitals from './reportWebVitals';
 //import { TreeExample } from './nodes/NodeTree'
+import MoveLayout from './MoveLayout';
+import MainForm from './MainForm';
+import NodeTree from './nodes/NodeTree3'
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
-root.render(<Main />)
+root.render(<MoveLayout />)
 //root.render(
 //    <React.StrictMode>
 //        {/*<TreeExample id={'ddd'} />*/}

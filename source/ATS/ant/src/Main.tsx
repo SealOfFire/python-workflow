@@ -1,10 +1,24 @@
 import React from 'react';
-import { Layout, Tabs, Drawer, Button, DatePicker, Space, version } from "antd";
+import {
+    Layout,
+    Tabs,
+    Drawer,
+    Button,
+    DatePicker,
+    Space,
+    version,
+    Menu,
+    Breadcrumb
+} from "antd";
 import NodeTree from './nodes/NodeTree2'
 import FlowChart from './flowchart/FlowChart'
 import NodeContextMenu from './flowchart/NodeContextMenu'
 import { ReactFlowProvider } from 'reactflow';
 import Parameters from './Parameters'
+import LeftMenu from './LeftMenu'
+import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+//import { restHeight} from '@/pages/constant'
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -53,7 +67,7 @@ class Main extends React.Component {
 
         this.state = {
             opens: {
-                'top': true,
+                'top': false,
             }, // 左侧多个抽屉开关控制
             flowChart: React.createRef()
         };
@@ -66,6 +80,15 @@ class Main extends React.Component {
         //    data[key] = false;
         //}
         data[key] = true;
+        this.setState({ opens: data });
+    }
+
+    onCollapse = (key: string) => {
+        console.log("onCollapse:", key);
+        const data = { ... this.state.opens };
+        console.log("onCollapse:", data);
+
+        data[key] = !data[key];
         this.setState({ opens: data });
     }
 
@@ -99,109 +122,68 @@ class Main extends React.Component {
         this.state.flowChart.current.load();
     }
 
+    onTopMenuClick = (e: any) => {
+        console.log('onTopMenuClick ', e);
+
+        switch (e.key) {
+            case 'save':
+                this.state.flowChart.current.save();
+                break;
+            case 'load':
+                this.state.flowChart.current.load();
+                break;
+        }
+    }
+
     render() {
+        const topMenu: MenuProps['items'] = [
+            {
+                label: 'File',
+                key: 'file',
+                icon: <MailOutlined />,
+                children: [
+                    {
+                        key: 'save',
+                        label: 'Save',
+                        icon: <SettingOutlined />,
+                    },
+                    {
+                        key: 'load',
+                        label: 'Load',
+                        icon: <SettingOutlined />,
+                    },
+                ]
+            },
+        ]
+
         const html =
             <ReactFlowProvider>
                 <Layout>
-                    <Header style={headerStyle} >Header
-                        <Drawer
-                            placement="top"
-                            mask={false}
-                            open={this.state.opens['top']}
-                            onClose={this.onClose.bind(this, 'top')}
-                            getContainer={false}
-                            closable={false}
-                            height={80}>
-                            <Button type="primary" style={{ marginBottom: 24 }} onClick={this.save}>保存</Button>
-                            <Button type="primary" style={{ marginBottom: 24 }} onClick={this.load}>读取</Button>
-                        </Drawer>
+                    <Header>
+                        <Menu mode="horizontal" items={topMenu} onClick={this.onTopMenuClick} />
                     </Header>
-                    <Layout>
-                        {/*右侧 -- start --*/}
-                        <Sider style={siderStyle} width={50}>
-                            <Button type="primary" onClick={this.showDrawer.bind(this, "components")}>折叠</Button>
-                            <Button type="primary" onClick={this.showDrawer.bind(this, "1")}>折叠</Button>
-                            <div style={{
-                                backgroundColor: '#999999',
-                                border: '1px solid #1a192b',
-                                display: 'flex',
-                                cursor: 'grab',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                                onDragStart={this.onDragStart.bind(this, { type: 'binOp', value: null })} draggable>input node</div>
-                            Sider1
-                            最近使用的组件列表
-                        </Sider>
-                        <Sider width={0}>
-                            <Drawer
-                                title="组件"
-                                placement="left"
-                                mask={false}
-                                open={this.state.opens['components']}
-                                onClose={this.onClose.bind(this, 'components')}
-                                getContainer={false}
-                                width={200}>
-                                <NodeTree />
-                            </Drawer>
-                            <Drawer
-                                title="Basic Drawer2"
-                                placement="left"
-                                mask={false}
-                                open={this.state.opens['1']}
-                                onClose={this.onClose.bind(this, '1')}
-                                getContainer={false}
-                                width={200}>
-                                bbb
-                            </Drawer>
-                        </Sider>
-                        {/*右侧 -- end --*/}
+                    <Content style={{ padding: '0 50px' }}>
+                        <Breadcrumb style={{ margin: '16px 0' }}>
+                            <Breadcrumb.Item>Home</Breadcrumb.Item>
+                            <Breadcrumb.Item>List</Breadcrumb.Item>
+                            <Breadcrumb.Item>App</Breadcrumb.Item>
+                        </Breadcrumb>
                         <Layout>
-                            <Content>
-                                <div style={{ height: '800px', width: '100%' }} >
-                                    <FlowChart ref={this.state.flowChart} />
-                                </div>
+                            <Sider collapsible collapsed={this.state.opens['Leftcollapsed']} onCollapse={this.onCollapse.bind(this, 'Leftcollapsed')}>
+                                <LeftMenu />
+                            </Sider>
+                            <Content style={{
+                                padding: '0 24px',
+                                minHeight: 800,
+                                overflow: "auto",
+                                backgroundColor: '#888888'
+                            }}>
+                                <FlowChart ref={this.state.flowChart} />
                             </Content>
-                            <Footer style={{ position: 'relative', height: 0, padding: 0 }}>
-                                <Drawer
-                                    title="日志"
-                                    placement="bottom"
-                                    mask={false}
-                                    open={this.state.opens['log']}
-                                    onClose={this.onClose.bind(this, 'log')}
-                                    getContainer={false}
-                                    height={300}>
-                                </Drawer>
-                                <Drawer
-                                    title="变量"
-                                    placement="bottom"
-                                    mask={false}
-                                    open={this.state.opens['variable']}
-                                    onClose={this.onClose.bind(this, 'variable')}
-                                    getContainer={false}
-                                    height={300}>
-                                    <Parameters/>
-                                </Drawer>
-                            </Footer>
-                            <Footer style={footerStyle}>
-                                <Button type="primary" onClick={this.showDrawer.bind(this, 'log')}>日志</Button>
-                                <Button type="primary" onClick={this.showDrawer.bind(this, 'variable')}>变量</Button>
-                            </Footer>
                         </Layout>
-                        {/*左侧 -- start -- */}
-                        <Sider style={siderStyle} width={50}>
-                            Sider
-                        </Sider>
-                        {/*左侧 -- end -- */}
-                    </Layout>
+                    </Content>
+                    <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
                 </Layout>
-                {/*<NodeContextMenu*/}
-                {/*    open={this.state.openNodeContextMenu}*/}
-                {/*    position={this.state.nodeContextMenuPosition}*/}
-                {/*    node={this.state.selectedNode}*/}
-                {/*    onMouseLeave={() => { this.setState({ openNodeContextMenu: false }); }}*/}
-                {/*    deleteNode={this.deleteNodeByContextMenu.bind(this, this.state.selectedNode)}*/}
-                {/*/>*/}
             </ReactFlowProvider>
 
         return html;

@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import cloneDeep from "lodash/cloneDeep";
-import { Classes, Icon, Intent, Tree, TreeNodeInfo, IconSize } from "@blueprintjs/core";
+import { Classes, Icon, Intent, Tree, TreeNode, TreeNodeInfo, IconSize } from "@blueprintjs/core";
 
 type NodePath = number[];
 
@@ -180,6 +180,10 @@ class NodeTree extends React.Component {
     render() {
         const html =
             <React.Fragment>
+                {/*<Tree>*/}
+                {/*    <Tree.TreeNode></Tree.TreeNode>*/}
+                {/*</Tree>*/}
+                
                 <Tree
                     contents={this.state.nodes}
                     onNodeClick={this.handleNodeClick}
