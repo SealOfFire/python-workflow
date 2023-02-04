@@ -49,3 +49,13 @@ https://github.com/ticlo/rc-dock
 https://github.com/brimdata/react-arborist
 https://ant.design/components/tree-cn#tree-props
 https://ant.design/docs/react/recommendation-cn
+
+https://developer.microsoft.com/zh-cn/fluentui#/get-started/webcomponents
+https://react.fluentui.dev/?path=/docs/migration-shims-theme-createv9theme--default
+https://learn.microsoft.com/zh-cn/fluent-ui/web-components/getting-started/install-packages
+
+https://www.jqwidgets.com/react/react-dockinglayout/index.htm
+https://www.infragistics.com/products/ignite-ui-react/react/components/layouts/dock-manager
+
+https://golden-layout.github.io/golden-layout/
+https://github.com/caplin/FlexLayout

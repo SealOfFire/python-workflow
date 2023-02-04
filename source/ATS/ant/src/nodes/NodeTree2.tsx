@@ -60,6 +60,7 @@ class NodeTree extends React.Component {
                 <Tree
                     showLine={true}
                     showIcon={true}
+                    style={{ height: '100%' }}
                 >
                     <Tree.TreeNode title='program' key='program'>
                         <Tree.TreeNode title={<span draggable> aaaa</span>} key='aaaa' icon={<MehOutlined />}>

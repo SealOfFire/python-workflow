@@ -180,8 +180,7 @@ class NodeTree extends React.Component {
     render() {
         const html =
             <React.Fragment>
-                {/*<Tree>*/}
-                {/*    <Tree.TreeNode></Tree.TreeNode>*/}
+                {/*<Tree contents={[<TreeNode depth={0} id={1} label={'aa'} path={[]}></TreeNode>]}>*/}
                 {/*</Tree>*/}
                 
                 <Tree
