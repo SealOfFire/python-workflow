@@ -7,3 +7,6 @@
 /source/ATS/ant/.vscode
 /source/ATS/ant/obj/Debug
 *.user
+/source/ATS/ast/obj/Debug
+/source/ATS/ast/.vscode
+/source/ATS/node_modules
