@@ -262,6 +262,9 @@ class FlowChart extends React.Component {
         this.setNodes(nodes);
     }
 
+    deleteEdge = () => {
+    }
+
     /**
      * 创建一个节点
      */
@@ -284,6 +287,7 @@ class FlowChart extends React.Component {
                 targets: '',
                 onDataChange: this.onDataChange,
                 onDeleteNode: this.deleteNode,
+                onDeleteEdge: this.deleteEdge,
             },
             dragHandle: '.custom-drag-handle',
 

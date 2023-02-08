@@ -12,6 +12,7 @@ import 'flexlayout-react/style/light.css'
 import FlowChart from '../flowchart/FlowChart'
 import NodeTree from '../nodes/NodeTree3'
 import Parameters from '../Parameters'
+import { ReactFlowProvider } from 'reactflow';
 
 function Main() {
 
@@ -143,7 +144,11 @@ function Main() {
         }
     }
 
-    return (<Layout model={model} factory={factory} />);
+    return (
+        <ReactFlowProvider>
+            <Layout model={model} factory={factory} />
+        </ReactFlowProvider>
+    );
 }
 
 export default Main;

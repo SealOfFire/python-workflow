@@ -56,7 +56,7 @@ class NodeTree3 extends React.Component {
             aria-label="file system navigator"
             defaultCollapseIcon={<ExpandMoreIcon />}
             defaultExpandIcon={<ChevronRightIcon />}
-            style={{ overflow: 'auto' }}
+            style={{ overflow: 'auto', height:'100%' }}
             ref={this.state.ref}
         >
             {this.createNode(nodeData)}

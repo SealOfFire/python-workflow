@@ -35,7 +35,7 @@ class List extends React.Component<any> {
 
         const content =
             <React.Fragment>
-                <IconButton onClick={this.add}>
+                <IconButton onClick={this.add} className="nodrag">
                     <AddCircleOutlineIcon />
                 </IconButton>
             </React.Fragment>

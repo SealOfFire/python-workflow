@@ -9,6 +9,8 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "reactproject1", "reactproje
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "ant", "ant\ant.esproj", "{6C472E95-7E08-42AF-8D38-9B184007C087}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "ast", "ast\ast.esproj", "{822CB360-B7E5-4A9A-A8D4-FB7250DCBAA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,12 @@ Global
 		{6C472E95-7E08-42AF-8D38-9B184007C087}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C472E95-7E08-42AF-8D38-9B184007C087}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6C472E95-7E08-42AF-8D38-9B184007C087}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{822CB360-B7E5-4A9A-A8D4-FB7250DCBAA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{822CB360-B7E5-4A9A-A8D4-FB7250DCBAA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{822CB360-B7E5-4A9A-A8D4-FB7250DCBAA7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{822CB360-B7E5-4A9A-A8D4-FB7250DCBAA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{822CB360-B7E5-4A9A-A8D4-FB7250DCBAA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{822CB360-B7E5-4A9A-A8D4-FB7250DCBAA7}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
