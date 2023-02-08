@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 //import { Handle, Position } from 'reactflow';
 import BaseNode from '../BaseNode'
-import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 //import PlusOneIcon from '@mui/icons-material/PlusOne';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
@@ -14,7 +14,6 @@ function List(props: any) {
         node.list.push(node.list.length - 1 + 1);
         setData(node)
         props.data.onDataChange(node);
-
     }
 
     const minus = (index: number) => {
@@ -41,9 +40,10 @@ function List(props: any) {
 
     const content =
         <>
-            <IconButton onClick={add} className="nodrag">
-                <AddCircleOutlineIcon />
-            </IconButton>
+            <Button variant="outlined" startIcon={<AddCircleOutlineIcon />}
+                onClick={add} className="nodrag">
+                添加项
+            </Button>
         </>
 
 
@@ -56,7 +56,8 @@ function List(props: any) {
             hasNext={true}
             content={content}
             parameters={parameters}
-            minus={minus}
+            onMinus={minus}
+            showMinus={true}
         />
     );
 }

@@ -8,6 +8,7 @@ import If from './program/If'
 import For from './program/For'
 import List from './program/List'
 import Name from './program/Name'
+import Call from './program/Call'
 import React from 'react'
 
 const nodeTypes = {
@@ -21,6 +22,7 @@ const nodeTypes = {
     compare: Compare,
     if: If,
     for: For,
+    call: Call
 };
 
 export interface INode {
@@ -43,6 +45,7 @@ export const nodeData: Array<INode> = [
             { id: 'compare', title: 'COMPARE' },
             { id: 'if', title: 'IF' },
             { id: 'for', title: 'FOR' },
+            { id: 'call', title: 'CALL' },
         ]
     }
 ]
@@ -58,6 +61,7 @@ export const nodeName: { [id: string]: string } = {
     compare: 'COMPARATORS',
     if: 'IF',
     for: 'FOR',
+    call: 'CALL',
 };
 
 export default nodeTypes

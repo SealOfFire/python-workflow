@@ -21,6 +21,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import TextField from '@mui/material/TextField';
+import Paper from '@mui/material/Paper';
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -74,7 +76,7 @@ function BaseNode(props: any) {
         padding: 5,
         //alignItems: 'center',
         //flexWrap: 'wrap',
-        //display: 'flex',
+        display: 'flex',
         //border: 'solid 1px #ccc',
         //borderTop:'0px',
         //border: '1px dashed grey'
@@ -83,12 +85,21 @@ function BaseNode(props: any) {
     const parameters = props.parameters?.map((item: any, index: number) =>
         <>
             <Box key={index} ref={refs[index]} style={gridStyle}>
-                {item['title']}
-                <IconButton onClick={() => props.minus(index)} className="nodrag">
-                    <RemoveCircleOutlineIcon />
-                </IconButton>
+                {props.readOnly
+                    ? <TextField id="outlined-basic" label="参数名"
+                        variant="outlined" size='small'
+                        className="nodrag"
+                        onChange={(e) => props.onChange(e, index)} />
+                    : <TextField id="outlined-basic" label="索引" variant="outlined"
+                        color="success"
+                        size='small' value={item['title']}
+                        InputProps={{ readOnly: true, }} className="nodrag" focused />
+                }
+                {props.showMinus &&
+                    <IconButton onClick={() => props.onMinus(index)} className="nodrag">
+                        <RemoveCircleOutlineIcon />
+                    </IconButton>}
             </Box>
-            <Divider />
         </>);
 
     const parametersHandles = props.parameters?.map((item: any, index: number) =>
