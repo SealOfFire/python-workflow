@@ -7,7 +7,7 @@ import json
 import re
 
 # 读取的文件名
-fileName = '循环打印.json'
+fileName = r'循环打印.json'
 
 jsonData = {}
 with open(fileName, 'r', encoding='utf-8') as f:
@@ -25,7 +25,7 @@ def findStart(jsonData):
 	查找开始节点
 	"""
 	for node in jsonData['nodes']:
-		if(node['type'] == 'start'):
+		if(node['data']['type'] == 'start'):
 			break
 	return node
 
@@ -360,7 +360,7 @@ def astCreateNode(node, jsonData):
 	"""
 	创建语法树节点
 	"""
-	astNode = astNodeMethods[node['type']](node, jsonData)
+	astNode = astNodeMethods[node['data']['type']](node, jsonData)
 	return astNode
 
 def asdCreateCall(node, jsonData):

@@ -9,6 +9,7 @@ import For from './program/For'
 import List from './program/List'
 import Name from './program/Name'
 import Call from './program/Call'
+import Print from './function/Print'
 import React from 'react'
 
 const nodeTypes = {
@@ -22,7 +23,8 @@ const nodeTypes = {
     compare: Compare,
     if: If,
     for: For,
-    call: Call
+    call: Call,
+    print: Print
 };
 
 export interface INode {
@@ -46,6 +48,13 @@ export const nodeData: Array<INode> = [
             { id: 'if', title: 'IF' },
             { id: 'for', title: 'FOR' },
             { id: 'call', title: 'CALL' },
+        ]
+    },
+    {
+        id: 'Function',
+        title: 'FUNCTION',
+        children: [
+            { id: 'print', title: 'PRINT' }
         ]
     }
 ]
