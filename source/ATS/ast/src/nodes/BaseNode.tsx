@@ -90,7 +90,7 @@ function BaseNode(props: any) {
                         variant="outlined" size='small'
                         className="nodrag"
                         onChange={(e) => props.onChange(e, index)} />
-                    : <TextField id="outlined-basic" label="索引" variant="outlined"
+                    : <TextField id="outlined-basic" label={item['title']} variant="outlined"
                         color="success"
                         size='small' value={item['title']}
                         InputProps={{ readOnly: true, }} className="nodrag" focused />

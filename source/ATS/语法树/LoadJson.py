@@ -7,13 +7,17 @@ import json
 import re
 
 # 读取的文件名
-fileName = 'sample.json'
+fileName = '循环打印.json'
 
 jsonData = {}
 with open(fileName, 'r', encoding='utf-8') as f:
 	jsonData = json.load(f)
 
-#print(jsonData)
+data = jsonData['files']
+for k,v in jsonData['files'].items():
+	data = v
+	break
+#print(data)
 
 
 def findStart(jsonData):
@@ -262,6 +266,37 @@ def astList(node, jsonData):
 	return astNode;
 
 
+def astCall(node, jsonData):
+	"""
+	调用函数
+	"""
+	
+	astName=ast.Name(id=node['data']['value'], ctx=ast.Load(), lineno=0, col_offset=0);
+	elts=[]
+	edges = findEdgeTarget(node, jsonData)
+	for edge in edges:
+		name=re.sub("\[\d+\]","",edge['targetHandle']);
+		if(name == 'value'):
+			index = int(re.search("\[\d+\]",edge['targetHandle']).group().replace('[','').replace(']',''))
+			childNode = findNode(edge['source'], jsonData)
+			elts.insert(index, astCreateNode(childNode, jsonData))
+
+	index=0
+	args=[]
+	keywords=[]
+	for v in node['data']['list']:
+		if(len(v) == 0):
+			# 无名的参数
+			args.append(elts[index])
+		else:
+			# 有名的参数
+			keywords.append(ast.keyword(v,elts[index]))
+		index += 1
+	#pass
+	astNode = ast.Call(astName, args, keywords, lineno=0, col_offset=0)
+	return astNode;
+
+
 def astCreateTargetNode(dictTarget, node, jsonData):
 	"""
 	"""
@@ -317,6 +352,7 @@ astNodeMethods = {
     'callPrint': astCallPrint,
 	'binOp':astBinOp,
 	'for':astFor,
+	'call':astCall,
 }
 
 
@@ -383,7 +419,7 @@ def iterationNodes(jsonData):
 	return astModule
 
 
-astNode = iterationNodes(jsonData)
+astNode = iterationNodes(data)
 print("AST", ast.dump(astNode, indent=4))
 print("CODE:\n", ast.unparse(astNode))
 print("RESULT:")
