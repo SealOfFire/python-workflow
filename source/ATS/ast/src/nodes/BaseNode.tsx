@@ -57,6 +57,14 @@ function BaseNode(props: any) {
 
     const cardRef = useRef(null);
 
+    let nextbackground = '';
+    if (props.nextCategory && props.nextCategory == 'expr') {
+        nextbackground = '#808080'
+    }
+    else if (props.nextCategory && props.nextCategory == 'var') {
+        nextbackground = '#00ff00'
+    }
+
     let refs: Array<any> = []
     let handleRefs: Array<any> = []
     if (props.parameters) {
@@ -135,11 +143,16 @@ function BaseNode(props: any) {
         console.log('BaseNode', 'handleRefs', handleRefs);
         handleRefs.map((item: any, index: number) => {
             if (item.current !== null) {
+                let backcolor = '#00ff00'
+                console.log('BaseNode', 'useEffect', parameters[index])
+                if (props.parameters[index].category && props.parameters[index].category == 'expr') {
+                    backcolor = '#808080'
+                }
                 console.log('BaseNode', 'item', item);
                 console.log('BaseNode', 'top2', item.current.style.top);
                 const top = refs[index].current.offsetTop + refs[index].current.offsetHeight / 2
                 console.log('BaseNode', 'top', top);
-                item.current.setAttribute('style', `top: ${top}px; background: #00ff00;`)
+                item.current.setAttribute('style', `top: ${top}px; background: ${backcolor};`)
                 console.log('BaseNode', 'top3', item.current.style.top);
             }
         });
@@ -177,11 +190,11 @@ function BaseNode(props: any) {
 
                 {
                     props.hasPrevious &&
-                    <Handle id="previous" type="target" position={Position.Left} style={{ top: 36 }} />
+                    <Handle id="previous" type="target" position={Position.Left} style={{ top: 36,  }} />
                 }
                 {
                     props.hasNext &&
-                    <Handle id="next" type="source" position={Position.Right} style={{ top: 36 }} />
+                    <Handle id="next" type="source" position={Position.Right} style={{ top: 36, backgroundColor: nextbackground }} />
                 }
                 {parametersHandles}
                 {/*<CardActions disableSpacing>*/}

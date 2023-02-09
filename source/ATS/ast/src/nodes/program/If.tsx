@@ -4,8 +4,8 @@ function If(props: any) {
 
     const parameters = [
         { id: 'test', title: 'TEST', type: 'target' },
-        { id: 'body', title: 'BODY', type: 'source' },
-        { id: 'orelse', title: 'OR ELSE', type: 'source' },
+        { id: 'body', title: 'BODY', type: 'source', category: 'expr' },
+        { id: 'orelse', title: 'OR ELSE', type: 'source', category: 'expr' },
     ]
 
     return (

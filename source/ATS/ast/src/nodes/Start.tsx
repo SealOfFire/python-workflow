@@ -9,7 +9,8 @@ function Start(props: any) {
             title='START'
             subheader='程序的起点'
             hasPrevious={false}
-            hasNext={true} />
+            hasNext={true}
+            nextCategory='expr' />
     );
 }
 

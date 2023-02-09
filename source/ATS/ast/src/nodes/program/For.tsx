@@ -3,10 +3,10 @@ import BaseNode from '../BaseNode'
 function For(props: any) {
 
     const parameters = [
-        { id: 'target', title: 'TARGET', type: 'target' },
+        { id: 'target', title: 'TARGET', type: 'target' ,},
         { id: 'iter', title: 'ITERATION', type: 'target' },
-        { id: 'body', title: 'BODY', type: 'source' },
-        { id: 'orelse', title: 'OR ELSE', type: 'source' },
+        { id: 'body', title: 'BODY', type: 'source', category: 'expr' },
+        { id: 'orelse', title: 'OR ELSE', type: 'source', category: 'expr' },
     ]
 
     return (

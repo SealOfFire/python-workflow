@@ -66,6 +66,7 @@ function BinOp(props: any) {
             subheader='二元运算'
             hasPrevious={false}
             hasNext={true}
+            nextCategory='var'
             content={content}
             parameters={parameters}
         />

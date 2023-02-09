@@ -63,6 +63,7 @@ function Compare(props: any) {
             subheader='比较运算'
             hasPrevious={false}
             hasNext={true}
+            nextCategory='var'
             content={content}
             parameters={parameters}
         />

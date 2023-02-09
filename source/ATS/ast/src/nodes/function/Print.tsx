@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import BaseNode from '../BaseNode'
 import TextField from '@mui/material/TextField';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
 function Print(props: any) {
@@ -14,7 +12,7 @@ function Print(props: any) {
     node.data.type='call'
 
     const parameters = [
-        { id: 'value[0]', title: 'VALUE', type: 'target' },
+        { id: 'value[0]', title: 'VALUE', type: 'target', category:'' },
     ]
 
     const content =

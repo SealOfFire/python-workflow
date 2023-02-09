@@ -54,6 +54,7 @@ function List(props: any) {
             subheader='列表'
             hasPrevious={false}
             hasNext={true}
+            nextCategory='var'
             content={content}
             parameters={parameters}
             onMinus={minus}

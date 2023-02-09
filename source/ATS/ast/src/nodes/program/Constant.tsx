@@ -35,6 +35,7 @@ function Constant(props: any) {
             subheader='常量'
             hasPrevious={false}
             hasNext={true}
+            nextCategory='var'
             content={content} />
     );
 }
